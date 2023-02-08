@@ -1,11 +1,11 @@
 import "./App.css";
 import { Fragment, useEffect } from "react";
-import Goals from "./components/goals/Goals";
+import Layout from "./components/layout/Layout";
 
 function App() {
   return (
     <Fragment>
-      <Goals></Goals>
+      <Layout></Layout>
     </Fragment>
   );
 }

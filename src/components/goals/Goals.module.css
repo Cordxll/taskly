@@ -1,16 +1,20 @@
-/* @media all and (max-width: 420px) { */
 .header {
-  width: 100%;
+  width: 100vh;
   height: 5rem;
   padding: 0 10%;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #c99092;
+  background-color: #d2b9bb;
+  box-shadow: 0 0 50px #756c6c50;
+  border-radius: 5px;
+  overflow-x: hidden;
 }
 
-.header h1 {
-  color: rgb(241, 232, 232);
+h1 {
+  color: rgb(63, 58, 58);
+  font-family: "Lato", sans-serif;
 }
 
 .header ul {
@@ -19,11 +23,17 @@
   padding: 0;
 }
 
-.card {
-  margin: 1.5rem;
-  padding: 1.5rem;
-  display: flex;
+.goal {
+  /* width: 80vh; */
+  border-radius: 8px;
+  /* margin: 1.5rem;
+  padding: 1.5rem; */
+  /* display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: center; */
 }
-/* } */
+/* @media only screen and (min-width: 768px) {
+  .header {
+    width: 100vh;
+  }
+} */

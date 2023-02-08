@@ -5,7 +5,7 @@ import classes from "./CompletedTasks.module.css";
 const CompletedTasks = (props) => {
   return (
     <Fragment>
-      <Card>
+      <Card className={classes.card}>
         <div className={classes.task}>
           <span>{props.title}</span>
           <span>{props.date}</span>

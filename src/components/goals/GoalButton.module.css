@@ -1,12 +1,12 @@
 .button {
   background-color: transparent;
-  border-color: #1ad1b9;
-  color: #1ad1b9;
+  border-color: hwb(0 21% 77%);
+  color: black;
 }
 
 .button:hover,
 .button:active {
-  color: white;
+  color: black;
 }
 
 .button span {

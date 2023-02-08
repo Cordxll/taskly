@@ -6,11 +6,11 @@ import { Fragment } from "react";
 const Goals = () => {
   return (
     <Fragment>
-      <header className={classes.header}>
+      {/* <header className={classes.header}>
         <h1>My Goals</h1>
-      </header>
+      </header> */}
 
-      <div className={classes.card}>
+      <div className={classes.goal}>
         <GoalItem />
       </div>
     </Fragment>
