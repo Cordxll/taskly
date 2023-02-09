@@ -3,7 +3,7 @@ import Card from "../ui/Card";
 import GoalItem from "./GoalItem";
 import { Fragment } from "react";
 
-const Goals = () => {
+const Goals = (props) => {
   return (
     <Fragment>
       {/* <header className={classes.header}>

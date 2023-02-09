@@ -12,7 +12,7 @@ const GoalButton = (props) => {
 
   return (
     <button className={classes.button} onClick={toggleGoalHandler}>
-      <span>Expand</span>
+      <span>View Tasks</span>
     </button>
   );
 };

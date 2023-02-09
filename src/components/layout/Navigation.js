@@ -17,12 +17,15 @@ const Footer = () => {
         <div className={classes.navigation}>
           <button className={classes.button}>
             <img className={classes.icon} src={Home} alt="homepage" />
+            <span>Home</span>
           </button>
           <button className={classes.button}>
             <img className={classes.icon} src={Calendar} alt="calendar" />
+            <span>Calendar</span>
           </button>
           <button className={classes.button}>
             <img className={classes.icon} src={Profile} alt="profile" />
+            <span>Profile</span>
           </button>
         </div>
       </div>

@@ -20,7 +20,7 @@ html {
 
 body {
   margin: 0;
-  background-color: #faf4f4fa;
+  background-color: hsla(0, 0%, 100%, 0.98);
 }
 
 /* button {

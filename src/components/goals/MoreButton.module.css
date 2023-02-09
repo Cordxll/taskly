@@ -1,0 +1,32 @@
+ul {
+  list-style-type: none;
+}
+
+.main {
+  display: grid;
+  grid-template-columns: 0.1fr 0.1fr;
+  grid-template-rows: 0.1fr 0.1fr;
+}
+.icon {
+  border: none;
+  background-color: transparent;
+  grid-row: 1 / span 1;
+  grid-column: 1;
+}
+.btn1 {
+  grid-row: 1;
+  grid-column: 2;
+  background-color: transparent;
+  border-color: #3b363650;
+  border: none;
+}
+.btn2 {
+  grid-row: 2;
+  grid-column: 2;
+  background-color: transparent;
+  border-color: #3b363650;
+  border: none;
+}
+.btn button {
+  position: sticky;
+}
