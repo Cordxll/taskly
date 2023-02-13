@@ -1,16 +1,17 @@
 import { Fragment } from "react";
-import Card from "../ui/Card";
 import classes from "./CompletedTasks.module.css";
+import TimeClock from "../pics/time.svg";
 
 const CompletedTasks = (props) => {
   return (
     <Fragment>
-      <Card className={classes.card}>
-        <div className={classes.task}>
-          <span>{props.title}</span>
-          <span>{props.date}</span>
+      <div className={classes.task}>
+        <div>{props.title}</div>
+        <div className={classes.time}>
+          <img className={classes.timeClock} src={TimeClock} alt="time clock" />
+          <div className={classes.goalTime}>{props.date}</div>
         </div>
-      </Card>
+      </div>
     </Fragment>
   );
 };

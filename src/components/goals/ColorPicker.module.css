@@ -1,0 +1,73 @@
+.colors {
+  width: 100%;
+  margin: 0.6rem 0.4rem;
+  display: flex;
+  flex-direction: column;
+}
+.colorText {
+  align-self: start;
+}
+
+.colorBtns {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin: 0.4rem 0.2rem;
+}
+
+.colorBtns button {
+  align-self: center;
+  border-radius: 50%;
+  margin: 0.3rem;
+  width: 40px;
+  height: 40px;
+
+  border: none;
+  box-shadow: 0 0 10px #4a3c3c50;
+}
+
+.color1 {
+  background: #a6cba8;
+}
+.color2 {
+  background: #75c0c6;
+}
+.color3 {
+  background: #b4737c;
+}
+.color4 {
+  background: #686dad;
+}
+.color5 {
+  background: #9868ac;
+}
+
+.Rainbow_Circle {
+  --Circle_Diameter: 50%;
+  top: calc(50% - var(--Circle_Diameter) / 2);
+  left: calc(50% - var(--Circle_Diameter) / 2);
+  height: var(--Circle_Diameter);
+  width: var(--Circle_Diameter);
+  border-radius: calc(var(--Circle_Diameter) / 2);
+  background: linear-gradient(
+    139.84deg,
+    #a692ed 14.35%,
+    #6cecad 45.6%,
+    #d87eaa 82.79%
+  );
+  animation: Rotate 3s linear infinite;
+}
+@keyframes Rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.colorPicker {
+  background-color: transparent;
+  border: none;
+  opacity: 0;
+}

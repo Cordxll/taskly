@@ -1,0 +1,15 @@
+.submit {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 0.5rem;
+}
+.submitButton {
+  width: 70%;
+  height: 50px;
+  background-color: rgb(44, 42, 42);
+  color: white;
+  border-radius: 9px;
+  font-size: 1rem;
+}

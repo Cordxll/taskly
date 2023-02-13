@@ -1,3 +1,6 @@
+header {
+  padding: 0.7rem;
+}
 .control_group {
   display: flex;
   flex-direction: row;
@@ -18,24 +21,25 @@
   padding: 0 1rem;
 }
 
-.form input {
+.textInput input {
   margin: 0.5rem 0;
   width: 90%;
   height: 35px;
   font-size: 1rem;
-}
-
-.submitButton {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-.submitButton button {
-  width: 60%;
-  height: 50px;
-  background-color: rgb(44, 42, 42);
-  color: white;
   border-radius: 9px;
-  margin: 1rem;
+}
+.container header {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0.5rem 3rem;
+  color: black;
+}
+.container {
+  background-color: white;
+  border-radius: 20px 20px 0 0;
+  position: absolute;
+  width: 100%;
+  padding: 0;
+  clear: both;
+  bottom: 0;
 }

@@ -1,5 +1,10 @@
 import useInput from "./UseInput";
 import classes from "./BasicForm.module.css";
+import Modal from "./Modal";
+import EditCard from "./EditCard";
+import SaveCard from "./SaveCard";
+import ColorPicker from "../goals/ColorPicker";
+// import Delete from "../pics/delete.svg";
 
 const isNotEmpty = (value) => value.trim() !== "";
 
@@ -42,38 +47,44 @@ const BasicForm = (props) => {
     resetDescription();
   };
 
-  // const titleClasses = titleHasError
-  //   ? "form-control invalid"
-  //   : `form-control ${title}`;
-
   return (
-    <form onSubmit={submitHandler}>
-      <div className={classes.control_group}>
-        <div className={classes.form}>
-          <label htmlFor="title">Title</label>
-          <input
-            type="text"
-            id="title"
-            value={title}
-            onChange={titleChangeHandler}
-            onBlur={titleBlurHandler}
-          />
-          <label htmlFor="description">Description</label>
-          <input
-            type="text"
-            id="description"
-            value={description}
-            onChange={descriptionChangeHandler}
-            onBlur={descriptionBlurHandler}
-          />
-          {titleHasError && <p className="error-text">Please enter a title.</p>}
-        </div>
+    <Modal onClose={props.onClose}>
+      <div className={classes.container}>
+        <form onSubmit={submitHandler}>
+          <header>{props.title}</header>
+          <div className={classes.control_group}>
+            <div className={classes.form}>
+              <div className={classes.textInput}>
+                <label htmlFor="title">Title</label>
+                <input
+                  type="text"
+                  id="title"
+                  value={title}
+                  onChange={titleChangeHandler}
+                  onBlur={titleBlurHandler}
+                />
+                <label htmlFor="description">Description</label>
+                <input
+                  type="text"
+                  id="description"
+                  value={description}
+                  onChange={descriptionChangeHandler}
+                  onBlur={descriptionBlurHandler}
+                />
+              </div>
+              <ColorPicker />
+              {titleHasError && (
+                <p className="error-text">Please enter a title.</p>
+              )}
+            </div>
+          </div>
+          {props.title === "Update goal" && (
+            <EditCard onClick={props.onClose} />
+          )}
+          {props.title === "Add a goal" && <SaveCard onClick={props.onClose} />}
+        </form>
       </div>
-
-      <div className={classes.submitButton}>
-        <button disabled={!formIsValid}>Create new goal</button>
-      </div>
-    </form>
+    </Modal>
   );
 };
 

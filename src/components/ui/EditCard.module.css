@@ -1,15 +1,24 @@
-.container header {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin: 0.5rem 3rem;
-  color: black;
+.submit {
+  display: grid;
+  grid-template-columns: 4fr 1fr;
+  justify-content: center;
+  align-items: center;
+  margin: 0.3rem 3.3rem;
 }
-.container {
-  background-color: white;
-  border-radius: 20px 20px 0 0;
-  position: absolute;
-  width: 100%;
-  padding: 0;
-  clear: both;
-  bottom: 0;
+.submitButton {
+  padding: 1rem;
+  grid-column: 1;
+  height: 50px;
+  background-color: rgb(44, 42, 42);
+  color: white;
+  border-radius: 9px;
+  justify-items: center;
+  font-size: 1rem;
+}
+
+.deleteButton {
+  padding: 1rem;
+  grid-column: 2;
+  border: none;
+  background-color: transparent;
 }
