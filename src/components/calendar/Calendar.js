@@ -69,7 +69,7 @@ export default function Cal({tasks}){
                             <button className={classes.calendarDate} onClick={()=> {dispatch(updateDate(format(x,'yyyy-MM-dd')))}}>
                             <time dateTime={format(x, 'yyyy-MM-dd')} style={{}}>
                                 <div className={style(x)}>
-                                    <div className={classes.calendarDateNum}>{format(x, 'd')}</div>
+                                    {format(x, 'd')}
                                     {tasks.some(meeting =>isSameDay(parseISO(meeting.startDatetime), x)) && (<div style={{position:"absolute",bottom:"0px",left:"0px",right:"0px",fontSize:"8px"}}>😊</div>)}
                                 </div> 
                             </time>
