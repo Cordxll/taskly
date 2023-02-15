@@ -1,12 +1,18 @@
 import Home from "../pics/home.svg";
 import Calendar from "../pics/calendar.svg";
 import Profile from "../pics/profile.svg";
-import AddButton from "../pics/add.svg";
 import Stats from "../pics/stats.svg";
 import classes from "./Navigation.module.css";
 import { Fragment } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { addActions } from "../../store/addSlice";
 const Navigation = (props) => {
+  const dispatch = useDispatch();
+  const toggleSaveFormHandler = () => {
+    dispatch(addActions.toggle());
+  };
+
   const navigate = useNavigate();
   const homePage = () => {
     navigate("/HomePage");
@@ -30,7 +36,8 @@ const Navigation = (props) => {
           <li>
             <button
               className={classes.addButton}
-              onClick={props.onShowSaveForm}
+              // onClick={props.onShowSaveForm}
+              onClick={toggleSaveFormHandler}
             >
               {/* <img className={classes.icon} src={AddButton} alt="add" /> */}
               <div className={classes.circle_plus}>

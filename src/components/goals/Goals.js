@@ -1,19 +1,24 @@
 import classes from "./Goals.module.css";
-import Card from "../ui/Card";
 import GoalItem from "./GoalItem";
 import { Fragment } from "react";
-import { goalsActions } from "../../store/goalsSlice";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import AddGoalForm from "./actions/AddGoalForm";
+import { addActions } from "../../store/addSlice";
 
 const Goals = (props) => {
   const goals = useSelector((state) => state.goals.goals);
+
+  const addForm = useSelector((state) => state.add);
+  const dispatch = useDispatch();
+  const toggleSaveFormHandler = () => {
+    dispatch(addActions.toggle());
+  };
 
   return (
     <Fragment>
       <div className={classes.goal}>
         {goals.map((item) => (
           <GoalItem
-            onClick={props.onShowForm}
             key={item.id}
             item={{
               id: item.id,
@@ -23,6 +28,11 @@ const Goals = (props) => {
           />
         ))}
       </div>
+      {addForm.addFormIsVisible && (
+        <div className={classes.modal}>
+          <AddGoalForm onClose={toggleSaveFormHandler} title={addForm.title} />
+        </div>
+      )}
     </Fragment>
   );
 };
