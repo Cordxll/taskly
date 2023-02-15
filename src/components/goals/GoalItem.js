@@ -9,6 +9,7 @@ import TimeClock from "../pics/time.svg";
 import { goalsActions } from "../../store/goalsSlice";
 import { editActions } from "../../store/editSlice";
 import EditGoalForm from "./actions/EditGoalForm";
+import { useState, useEffect } from "react";
 
 const GoalItem = (props) => {
   const dispatch = useDispatch();
@@ -16,10 +17,17 @@ const GoalItem = (props) => {
   const editForm = useSelector((state) => state.edit);
 
   const { id, title, color } = props.item;
+  // console.log(goal);
 
-  const toggleEditFormHandler = (evt) => {
+  const toggleEditFormHandler = () => {
     console.log(props.item);
     dispatch(editActions.toggle());
+    // return async (dispatch) => {
+    //   await dispatch(goalsActions.changeTitle("hey"));
+    // };
+    return async (dispatch) => {
+      await props.onClose();
+    };
   };
 
   const showTasks = useSelector((state) => state.ui.taskIsVisible);
@@ -56,17 +64,19 @@ const GoalItem = (props) => {
       </Card>
 
       {showTasks && (
-        <CompletedTasks
-          className={classes.items}
-          title={"Eat healthy"}
-          date={"01/10/2023"}
-        />
+        <div>
+          <CompletedTasks
+            className={classes.items}
+            title={"Eat healthy"}
+            date={"01/10/2023"}
+          />
+        </div>
       )}
 
       {editForm.editFormIsVisible && (
         <div className={classes.modal}>
           <EditGoalForm
-            onClose={toggleEditFormHandler.bind(null, props.item.id)}
+            onClose={toggleEditFormHandler.bind(null, id)}
             title={editForm.title}
             goal={props.item}
           />

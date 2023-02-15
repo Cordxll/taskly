@@ -7,11 +7,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { goalsActions } from "../../../store/goalsSlice";
 
 const isNotEmpty = (value) => value.trim() !== "";
-const newId = Math.random();
 
 const AddGoalForm = (props) => {
   const dispatch = useDispatch();
   const goals = useSelector((state) => state.goals.goals);
+
+  const newId = Math.random();
 
   const {
     value: title,

@@ -56,8 +56,8 @@ const EditGoalForm = (props) => {
     resetDescription();
     dispatch(
       goalsActions.changeTitle({
+        title: title,
         id,
-        title,
       })
     );
 

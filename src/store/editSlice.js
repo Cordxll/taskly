@@ -4,7 +4,7 @@ const editSlice = createSlice({
   name: "edit",
   initialState: { title: "Update goal", editFormIsVisible: false },
   reducers: {
-    toggle(state) {
+    toggle(state, id) {
       state.editFormIsVisible = !state.editFormIsVisible;
     },
   },

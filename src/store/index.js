@@ -3,6 +3,7 @@ import addSlice from "./addSlice";
 import uiSlice from "./uiSlice";
 import goalsSlice from "./goalsSlice";
 import editSlice from "./editSlice";
+import dateSlice from "./dateSlice";
 
 const store = configureStore({
   reducer: {

@@ -1,12 +1,17 @@
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Goals from "../goals/Goals";
 import classes from "./Layout.module.css";
 import Navigation from "./Navigation";
+import { fetchGoalsData } from "../../store/goals-actions";
 
 const Layout = (props) => {
   const dispatch = useDispatch();
   const goals = useSelector((state) => state.goals.goals);
+
+  useEffect(() => {
+    dispatch(fetchGoalsData());
+  }, [dispatch]);
 
   return (
     <Fragment>
