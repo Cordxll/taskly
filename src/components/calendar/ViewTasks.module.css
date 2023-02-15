@@ -1,0 +1,26 @@
+.container{
+    width: 100vw;
+    display:flex;
+    justify-content: center;
+}
+
+.containerChild{
+    width: 90%;
+    padding-top: 5%;
+    border-radius: 8px;
+}
+
+.whatsHappening{
+    color:#696969
+}
+
+.noTask{
+    color: black;
+}
+
+@media screen and (min-width: 640px){
+    .container{
+        width: 100%;
+        padding: 1%;
+    }
+  }

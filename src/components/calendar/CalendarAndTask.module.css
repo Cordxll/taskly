@@ -1,0 +1,21 @@
+.container{
+    background-color: none;
+}
+
+@media screen and (min-width: 640px){
+    
+    .container{
+        width: 100vw;
+        height:100vh;
+        padding: 1%;
+        display: flex;
+    }
+    
+    .calendar{
+        width: 65%;
+    }
+    
+    .task{
+        width: 35%;
+    }
+  }

@@ -1,0 +1,123 @@
+.container{
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+.containerChild{
+    width: 90%;
+    padding-top: 5%;
+    border-radius: 8px;
+}
+.allUnset{
+    all:unset;
+}
+
+.colorWhite{
+    color: white;
+}
+
+.header{
+    background-color: black;
+    color: white;
+    font-weight: 600;
+    border-radius: 16px;
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.gridHeader{
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    padding: 14px;
+    font-weight: 600;
+    color: gray;
+}
+.gridHeaderSm{
+    display: none;
+}
+
+.calendarGrid{
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    padding-bottom: 14px;
+}
+.calendarDate{
+    all: unset;
+}
+
+.isntSameMonth{
+    color: rgb(162, 161, 161);
+    text-align: center;
+    padding-top: 30%;
+    padding-bottom: 30%;
+    border-radius: 100px;
+    font-weight: 600;
+    position: relative;
+}
+
+.isTodaySelected{
+    color: pink;
+    background-color: black;
+    text-align: center;
+    padding-top: 30%;
+    padding-bottom: 30%;
+    border-radius: 100px;
+    font-weight: 600;
+    position: relative;
+}
+
+.isTodayUnselected{
+    color: pink;
+    text-align: center;
+    padding-top: 30%;
+    padding-bottom: 30%;
+    border-radius: 100px;
+    font-weight: 600;
+    position: relative;
+}
+
+.isSelected{
+    color: white;
+    background-color: black;
+    text-align: center;
+    padding-top: 30%;
+    padding-bottom: 30%;
+    border-radius: 100px;
+    font-weight: 600;
+    position: relative;
+}
+
+.isDefault{
+    color: black;
+    text-align: center;
+    padding-top: 30%;
+    padding-bottom: 30%;
+    border-radius: 9999px;
+    font-weight: 600;
+    position: relative;
+}
+
+@media screen and (min-width: 640px){
+    .container{
+        width: 100%;
+    }
+    
+  }
+
+  @media screen and (min-width: 1000px){
+    .calendarDate{
+        border: 0.5px solid lightgray;
+    }
+    .gridHeader{
+        display: none;
+    }
+    .gridHeaderSm{
+        display: grid;
+        grid-template-columns: repeat(7, minmax(0, 1fr));
+        padding: 14px;
+        font-weight: 600;
+        color: gray;
+    }
+  }
