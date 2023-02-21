@@ -12,7 +12,7 @@
   animation-iteration-count: 1;
   animation-timing-function: linear;
   border-radius: 10px;
-  position: absolute;
+  /* position: absolute; */
   left: 0;
   right: 0;
   margin-left: 9%;

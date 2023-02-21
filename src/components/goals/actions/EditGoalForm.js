@@ -1,14 +1,23 @@
-import useInput from "./UseInput";
+import useInput from "../../ui/UseInput";
 import classes from "./BasicForm.module.css";
-import Modal from "./Modal";
+import Modal from "../../ui/Modal";
 import EditCard from "./EditCard";
-import SaveCard from "./SaveCard";
-import ColorPicker from "../goals/ColorPicker";
-// import Delete from "../pics/delete.svg";
+import ColorPicker from "../ColorPicker";
+import { useSelector, useDispatch } from "react-redux";
+import { goalsActions } from "../../../store/goalsSlice";
+import { useState, useEffect } from "react";
 
 const isNotEmpty = (value) => value.trim() !== "";
 
-const BasicForm = (props) => {
+const EditGoalForm = (props) => {
+  const dispatch = useDispatch();
+  const editTitle = useSelector((state) => state.edit.title);
+
+  const goals = useSelector((state) => state.goals.goals);
+
+  const { id, color } = props.goal;
+  // console.log(props.goal);
+
   const {
     value: title,
     isValid: titleIsValid,
@@ -41,16 +50,26 @@ const BasicForm = (props) => {
     }
 
     console.log("Submitted!");
-    console.log(title);
+    console.log(props.goal);
 
-    resetTitle();
+    // resetTitle();
     resetDescription();
+    dispatch(
+      goalsActions.changeTitle({
+        title: title,
+        id,
+      })
+    );
+
+    props.onClose();
   };
 
   return (
     <Modal onClose={props.onClose}>
       <div className={classes.container}>
-        <form onSubmit={submitHandler}>
+        <form
+        // onSubmit={submitHandler}
+        >
           <header>{props.title}</header>
           <div className={classes.control_group}>
             <div className={classes.form}>
@@ -72,20 +91,17 @@ const BasicForm = (props) => {
                   onBlur={descriptionBlurHandler}
                 />
               </div>
-              <ColorPicker />
+              <ColorPicker item={props.goal} />
               {titleHasError && (
                 <p className="error-text">Please enter a title.</p>
               )}
             </div>
           </div>
-          {props.title === "Update goal" && (
-            <EditCard onClick={props.onClose} />
-          )}
-          {props.title === "Add a goal" && <SaveCard onClick={props.onClose} />}
+          <EditCard onClick={submitHandler} />
         </form>
       </div>
     </Modal>
   );
 };
 
-export default BasicForm;
+export default EditGoalForm;

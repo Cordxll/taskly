@@ -1,52 +1,82 @@
 import classes from "./ColorPicker.module.css";
 import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { goalsActions } from "../../store/goalsSlice";
 
-const ColorPicker = () => {
-  const [color, setColor] = useState(classes.color1);
+const newId = Math.random();
 
-  function myFunction() {
-    switch (color) {
-      case 1:
-        document.body.style.backgroundColor = "green";
-        break;
-      case 2:
-        document.body.style.backgroundColor = "blue";
-        break;
-      case 3:
-        document.body.style.backgroundColor = "red";
-        break;
+const ColorPicker = (props) => {
+  const dispatch = useDispatch();
+  const [colorBtn, setColorBtn] = useState(classes.color1);
 
-      default:
-    }
-  }
   const colorSelected = (element) => {
     // document.body.style.background = element.value;
   };
 
+  //   const { title, color } = props.item;
+
+  const color1 = "#a6cba8";
+
+  const color2 = "#75c0c6";
+
+  const color3 = "#b4737c";
+
+  const color4 = "#686dad";
+
+  const color5 = "#9868ac";
+
+  const changeColorHandler = (evt) => {
+    // if (props.goal === null) {
+    //   dispatch(
+    //     goalsActions.addGoal({
+    //       id: newId,
+    //       title: props.title,
+    //       color: { backgroundColor: colorBtn },
+    //     })
+    //   );
+    // } else {
+    dispatch(
+      goalsActions.changeColor({
+        id: props.goal.id,
+        title: props.goal.title,
+        color: { backgroundColor: colorBtn },
+      })
+    );
+    // }
+
+    console.log(props.goal);
+  };
+
   const handleBtn1 = () => {
-    setColor(classes.color1);
+    setColorBtn(color1);
+    changeColorHandler();
   };
   const handleBtn2 = () => {
-    setColor(classes.color2);
+    setColorBtn(color2);
+    changeColorHandler();
   };
   const handleBtn3 = () => {
-    setColor(classes.color3);
+    setColorBtn(color3);
+    changeColorHandler();
   };
   const handleBtn4 = () => {
-    setColor(classes.color4);
+    setColorBtn(color4);
+    changeColorHandler();
   };
   const handleBtn5 = () => {
-    setColor(classes.color5);
+    setColorBtn(color5);
+    changeColorHandler();
   };
   const handleBtn6 = () => {
-    setColor(classes.color6);
+    // setColorBtn(color);
+    // changeColorHandler();
   };
 
   return (
     <div className={classes.colors}>
       <label className={classes.colorText}>What color?</label>
 
-      <div className={classes.colorBtns} color={color}>
+      <div className={classes.colorBtns}>
         <button className={classes.color1} onClick={handleBtn1}></button>
         <button className={classes.color2} onClick={handleBtn2}></button>
         <button className={classes.color3} onClick={handleBtn3}></button>

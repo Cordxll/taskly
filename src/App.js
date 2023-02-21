@@ -8,6 +8,9 @@ import Login from "./components/login/Login";
 import Register from "./components/registration/Register";
 import jwtDecode from "jwt-decode";
 import AuthContext from "./components/context/AuthContext";
+import CalendarAndTasks from "./components/calendar/CalendarAndTasks";
+import EditCard from "./components/goals/actions/EditCard";
+import HomePublic from "./components/home/HomePublic";
 
 
 const LOCAL_STORAGE_TOKEN_KEY = "productivePeopleToken"
@@ -67,6 +70,7 @@ function App() {
             <Route exact path="/Edit" element={<EditCard />} />
             <Route exact path="/Login" element={<Login />} />
             <Route exact path="/Register" element={<Register />} />
+            <Route exact path="/Cal" element={<CalendarAndTasks />} />
           </Routes>
         </Router>
       </Fragment>

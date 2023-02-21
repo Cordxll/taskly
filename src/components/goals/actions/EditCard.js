@@ -1,7 +1,5 @@
-import BasicForm from "./BasicForm";
 import classes from "./EditCard.module.css";
-import Modal from "./Modal";
-import Delete from "../pics/delete.svg";
+import Delete from "../../pics/delete.svg";
 
 const EditCard = (props) => {
   return (
