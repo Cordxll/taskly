@@ -6,20 +6,14 @@ import ColorPicker from "../ColorPicker";
 import { useSelector, useDispatch } from "react-redux";
 import { goalsActions } from "../../../store/goalsSlice";
 import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { format } from "date-fns";
 
 const isNotEmpty = (value) => value.trim() !== "";
 
 const EditGoalForm = (props) => {
-  const dispatch = useDispatch();
-  const editTitle = useSelector((state) => state.edit.title);
-
-  const goals = useSelector((state) => state.goals.goals);
-
-  const { id, color } = props.goal;
-  // console.log(props.goal);
-
   const {
-    value: title,
+    value: titleValue,
     isValid: titleIsValid,
     hasError: titleHasError,
     valueChangeHandler: titleChangeHandler,
@@ -28,7 +22,7 @@ const EditGoalForm = (props) => {
   } = useInput(isNotEmpty);
 
   const {
-    value: description,
+    value: descriptionValue,
     isValid: descriptionIsValid,
     hasError: descriptioneHasError,
     valueChangeHandler: descriptionChangeHandler,
@@ -36,41 +30,88 @@ const EditGoalForm = (props) => {
     reset: resetDescription,
   } = useInput(isNotEmpty);
 
-  let formIsValid = false;
+  const dispatch = useDispatch();
+  const editTitle = useSelector((state) => state.edit.title);
 
-  if (titleIsValid) {
+  const params = useParams();
+  const goals = useSelector((store) => store.goals.goals);
+  const navigate = useNavigate();
+  const existingItem = goals.filter((user) => user.id === Number(params.id));
+
+  const { id, title, description, timeline, color, completed } =
+    existingItem[0];
+
+  let formIsValid = true;
+  const [formHasChanged, setFormHasChanged] = useState(false);
+
+  const [values, setValues] = useState({
+    id,
+    title,
+    description,
+    timeline,
+    completed,
+  });
+  if (values.title.trim() === "") {
+    formIsValid = false;
+  } else {
     formIsValid = true;
   }
 
-  const submitHandler = (event) => {
+  const handleEditItem = (event) => {
     event.preventDefault();
 
-    if (!formIsValid) {
-      return;
-    }
-
-    console.log("Submitted!");
-    console.log(props.goal);
-
-    // resetTitle();
-    resetDescription();
     dispatch(
-      goalsActions.changeTitle({
-        title: title,
-        id,
+      goalsActions.changeInputs({
+        id: values.id,
+        title: values.title,
+        description: values.description,
+        timeline: values.timeline,
+        completed: values.completed,
       })
     );
+    navigate("/Layout");
+  };
 
-    props.onClose();
+  const handleRemoveItem = () => {
+    console.log(values.id);
+    dispatch(goalsActions.deleteGoal(values.id));
+    navigate("/Layout");
+  };
+
+  const changeColorHandler = (colors) => {
+    if (values.color !== color) {
+      setFormHasChanged(true);
+    }
+    dispatch(
+      goalsActions.changeColor({
+        id: existingItem[0].id,
+
+        color: { backgroundColor: colors },
+      })
+    );
   };
 
   return (
-    <Modal onClose={props.onClose}>
+    <Modal onClose={() => navigate("/Layout")}>
       <div className={classes.container}>
-        <form
-        // onSubmit={submitHandler}
-        >
-          <header>{props.title}</header>
+        <form onSubmit={handleEditItem}>
+          <div className={classes.header}>
+            <header>{editTitle}</header>
+            <div className={classes.completed}>
+              <label htmlFor="timeline">Completed</label>
+              <input
+                type="checkbox"
+                onChange={(e) => {
+                  setValues({
+                    ...values,
+                    completed: !values.completed,
+                  });
+                  setFormHasChanged(true);
+                }}
+              />
+            </div>
+          </div>
+
           <div className={classes.control_group}>
             <div className={classes.form}>
               <div className={classes.textInput}>
@@ -78,26 +119,56 @@ const EditGoalForm = (props) => {
                 <input
                   type="text"
                   id="title"
-                  value={title}
-                  onChange={titleChangeHandler}
-                  onBlur={titleBlurHandler}
+                  value={values.title}
+                  onChange={(e) => {
+                    setValues({
+                      ...values,
+                      title: e.target.value,
+                    });
+                    setFormHasChanged(true);
+                  }}
                 />
+
                 <label htmlFor="description">Description</label>
                 <input
                   type="text"
                   id="description"
-                  value={description}
-                  onChange={descriptionChangeHandler}
+                  value={values.description}
+                  onChange={(e) => {
+                    setValues({
+                      ...values,
+                      description: e.target.value,
+                    });
+                    setFormHasChanged(true);
+                  }}
                   onBlur={descriptionBlurHandler}
                 />
+                <label htmlFor="timeline">Timeline</label>
+                <input
+                  id="datePicker"
+                  type="date"
+                  value={values.timeline}
+                  onChange={(e) => {
+                    setValues({
+                      ...values,
+                      timeline: format(new Date(e.target.value), "yyyy-MM-dd"),
+                    });
+                    setFormHasChanged(true);
+                  }}
+                />
               </div>
-              <ColorPicker item={props.goal} />
-              {titleHasError && (
+              <ColorPicker goal={values} onChange={changeColorHandler} />
+              {/* {titleHasError && (
                 <p className="error-text">Please enter a title.</p>
-              )}
+              )} */}
             </div>
           </div>
-          <EditCard onClick={submitHandler} />
+          <EditCard
+            onClick={handleEditItem}
+            onDeleteClick={handleRemoveItem}
+            valid={formIsValid}
+            formChanged={formHasChanged}
+          />
         </form>
       </div>
     </Modal>

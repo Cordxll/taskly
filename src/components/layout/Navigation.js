@@ -5,7 +5,7 @@ import Stats from "../pics/stats.svg";
 import classes from "./Navigation.module.css";
 import { Fragment } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addActions } from "../../store/addSlice";
 const Navigation = (props) => {
   const dispatch = useDispatch();
@@ -36,10 +36,8 @@ const Navigation = (props) => {
           <li>
             <button
               className={classes.addButton}
-              // onClick={props.onShowSaveForm}
               onClick={toggleSaveFormHandler}
             >
-              {/* <img className={classes.icon} src={AddButton} alt="add" /> */}
               <div className={classes.circle_plus}>
                 <div className={classes.circle}>
                   <div className={classes.horizontal}></div>

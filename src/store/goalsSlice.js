@@ -1,19 +1,33 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { format } from "date-fns";
 
 const goalsSlice = createSlice({
   name: "goals",
   initialState: {
     goals: [
-      { id: 1, title: "Lose weight", color: { backgroundColor: "pink" } },
+      {
+        id: 1,
+        title: "Lose weight",
+        description: "Getting ready for the wedding",
+        timeline: format(new Date(2023, 4, 15), "yyyy-MM-dd"),
+        color: { backgroundColor: "pink" },
+        completed: false,
+      },
       {
         id: 2,
         title: "Learn new language",
+        description: "new hobby",
+        timeline: format(new Date(2023, 6, 1), "yyyy-MM-dd"),
         color: { backgroundColor: "blue" },
+        completed: false,
       },
       {
         id: 3,
         title: "Eat healthy",
+        description: "less stomach issues",
+        timeline: format(new Date(2023, 9, 15), "yyyy-MM-dd"),
         color: { backgroundColor: "purple" },
+        completed: true,
       },
     ],
     changed: false,
@@ -25,34 +39,37 @@ const goalsSlice = createSlice({
     changeColor(state, action) {
       const newItem = action.payload;
       const existingItem = state.goals.find((item) => item.id === newItem.id);
-
-      if (!existingItem) {
-        state.goals.push({
-          id: newItem.id,
-          title: newItem.title,
-          color: newItem.color,
-        });
-      } else {
-        existingItem.color = action.payload.color;
+      if (existingItem) {
+        existingItem.color = newItem.color;
       }
     },
-    changeTitle(state, action) {
+    changeInputs(state, action) {
       const newItem = action.payload;
       const existingItem = state.goals.find((item) => item.id === newItem.id);
-      existingItem.title = newItem.title;
+      if (existingItem) {
+        existingItem.title = newItem.title;
+        existingItem.description = newItem.description;
+        existingItem.timeline = newItem.timeline;
+        existingItem.completed = newItem.completed;
+      }
     },
     addGoal(state, action) {
       const newItem = action.payload;
       state.goals.push({
         id: newItem.id,
         title: newItem.title,
+        description: newItem.description,
+        timeline: newItem.timeline,
         color: newItem.color,
       });
     },
-    deleteGoal(state, action) {
+    deleteGoal: (state, action) => {
       const id = action.payload;
-      state.changed = true;
-      state.goals = state.goals.filter((item) => item.id !== id);
+      console.log(id);
+      const existingItem = state.goals.find((user) => user.id === id);
+      if (existingItem) {
+        state.goals = state.goals.filter((user) => user.id !== id);
+      }
     },
   },
 });

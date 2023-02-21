@@ -1,64 +1,56 @@
-import useInput from "../../ui/UseInput";
 import classes from "./BasicForm.module.css";
 import Modal from "../../ui/Modal";
 import SaveCard from "./SaveCard";
 import ColorPicker from "../ColorPicker";
-import { useSelector, useDispatch } from "react-redux";
 import { goalsActions } from "../../../store/goalsSlice";
-
-const isNotEmpty = (value) => value.trim() !== "";
+import { useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
+import { format } from "date-fns";
 
 const AddGoalForm = (props) => {
   const dispatch = useDispatch();
-  const goals = useSelector((state) => state.goals.goals);
 
   const newId = Math.random();
 
-  const {
-    value: title,
-    isValid: titleIsValid,
-    hasError: titleHasError,
-    valueChangeHandler: titleChangeHandler,
-    inputBlurHandler: titleBlurHandler,
-    reset: resetTitle,
-  } = useInput(isNotEmpty);
-
-  const {
-    value: description,
-    isValid: descriptionIsValid,
-    hasError: descriptioneHasError,
-    valueChangeHandler: descriptionChangeHandler,
-    inputBlurHandler: descriptionBlurHandler,
-    reset: resetDescription,
-  } = useInput(isNotEmpty);
-
   let formIsValid = false;
 
-  if (titleIsValid) {
+  const [item, setItem] = useState({
+    id: newId,
+    title: "",
+    description: "",
+    timeline: "",
+    color: {},
+  });
+
+  if (item.title.trim() === "") {
+    formIsValid = false;
+  } else {
     formIsValid = true;
   }
+
+  useEffect(() => {
+    console.log(item.color);
+  }, [item.color]);
+
+  const changeColorHandler = (colors) => {
+    console.log(colors);
+    setItem({ ...item, color: { backgroundColor: colors } });
+  };
 
   const submitHandler = (event) => {
     event.preventDefault();
 
-    if (!formIsValid) {
-      return;
-    }
-    // if (!goals.color) {
-    //   return;
-    // }
-
-    console.log("Submitted!");
-    console.log(title);
-
-    resetTitle();
-    resetDescription();
     dispatch(
       goalsActions.addGoal({
-        id: newId,
-        title: title,
+        id: item.id,
+        title: item.title,
+        description: item.description,
+        timeline: item.timeline,
+        color: item.color,
       })
     );
+    console.log(item);
+
     props.onClose();
   };
 
@@ -72,28 +64,47 @@ const AddGoalForm = (props) => {
               <div className={classes.textInput}>
                 <label htmlFor="title">Title</label>
                 <input
+                  className={classes.titleInput}
                   type="text"
                   id="title"
-                  value={title}
-                  onChange={titleChangeHandler}
-                  onBlur={titleBlurHandler}
+                  onChange={(e) =>
+                    setItem({
+                      ...item,
+                      title: e.target.value,
+                    })
+                  }
+                  required="required"
                 />
                 <label htmlFor="description">Description</label>
                 <input
                   type="text"
                   id="description"
-                  value={description}
-                  onChange={descriptionChangeHandler}
-                  onBlur={descriptionBlurHandler}
+                  onChange={(e) =>
+                    setItem({
+                      ...item,
+                      description: e.target.value,
+                    })
+                  }
+                />
+                <label htmlFor="timeline">Timeline</label>
+                <input
+                  id="datePicker"
+                  type="date"
+                  onChange={(e) =>
+                    setItem({
+                      ...item,
+                      timeline: format(new Date(e.target.value), "yyyy-MM-dd"),
+                    })
+                  }
                 />
               </div>
-              <ColorPicker id={newId} title={title} />
-              {titleHasError && (
+              <ColorPicker goal={item} onChange={changeColorHandler} />
+              {/* {titleHasError && (
                 <p className="error-text">Please enter a title.</p>
-              )}
+              )} */}
             </div>
           </div>
-          <SaveCard onClick={submitHandler} />
+          <SaveCard onClick={submitHandler} goal={item} valid={formIsValid} />
         </form>
       </div>
     </Modal>
