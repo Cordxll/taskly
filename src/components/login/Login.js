@@ -45,30 +45,27 @@ function Login() {
     }
 
     return (
-        <>
+        <div className={classes.container}>
             <div className={classes.box}>
-            <header className={classes.login}>
-                <h1>Login</h1>
-            </header>
+                <h1 className={classes.login} >Login to your account</h1>
                 <form onSubmit={handleSubmit}>
                     <div className={classes.form}>
-                        <div className={classes.username}>
+                        <div>
                             <label>Username</label>
                             <input type="text" name="username" onChange={handleChange}></input>
                         </div>
-                        <div className={classes.password}>
+                        <div>
                             <label>Password</label>
                             <input type="password" name="password" onChange={handleChange}></input>
                         </div>
-                        <div className={classes.loginBtn}>
-                        <button type="submit">Login</button>
-                        <p>Forgot your password? <a href="">Click Here</a></p>
+                        <div>
+                            <button type="submit">Login</button>
+                            <p>Don't have an account? <Link to="/register" style={{color:"blue"}}>Click Here</Link></p>
                         </div>
                     </div>
                 </form>
-
             </div>
-        </>
+        </div>
     );
 }
 

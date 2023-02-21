@@ -7,10 +7,10 @@ export default  function  HomePublic(){
         <h1 className={classes.h1}>
         Productivity App
         </h1>
-        <p style={{padding:"1%"}} className={classes.p}>We are more than just a planner or social media. Customize Productive People to help you strive towards your goals.</p>
+        <p style={{padding:"1%"}} className={classes.p}>We are more than just a planner or social media. Customize this app to help you strive towards your goals.</p>
         <div style={{display:"flex", justifyContent:"center", width:"100%", gap:"24px"}}>
-          <button className={`${classes.button} ${classes.btn1}`}>Sign Up</button>
-          <button className={`${classes.button} ${classes.btn2}`}>Sign In</button>
+          <Link to="/register" className={`${classes.button} ${classes.btn1}`}>Sign Up</Link>
+          <Link to="/Login" className={`${classes.button} ${classes.btn2}`}>Sign In</Link>
         </div>
         
       </div>    
