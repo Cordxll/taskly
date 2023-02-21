@@ -45,6 +45,7 @@
 }
 .calendarDate{
     all: unset;
+    cursor: pointer;
 }
 
 .isntSameMonth{
@@ -119,5 +120,25 @@
         padding: 14px;
         font-weight: 600;
         color: gray;
+    }
+    .isSelected{
+        color: red;
+        background-color: white;
+        text-align: center;
+        padding-top: 30%;
+        padding-bottom: 30%;
+        font-weight: 600;
+        position: relative;
+    }
+
+    .isTodaySelected{
+        color: rgb(255, 85, 113);
+        text-align: center;
+        background-color: white;
+        padding-top: 30%;
+        padding-bottom: 30%;
+        border-radius: 100px;
+        font-weight: 600;
+        position: relative;
     }
   }
