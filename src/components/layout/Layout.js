@@ -4,40 +4,24 @@ import Goals from "../goals/Goals";
 import classes from "./Layout.module.css";
 import Navigation from "./Navigation";
 import DesktopNav from "./DesktopNav";
-import { fetchGoalsData } from "../../store/goals-actions";
+import { fetchGoalsData, sendGoalsData } from "../../store/goals-actions";
 import { useState } from "react";
+
+let isInitial = true;
 
 const Layout = (props) => {
   const dispatch = useDispatch();
-  const goals = useSelector((state) => state.goals.goals);
+  const goals = useSelector((state) => state.goals);
 
   useEffect(() => {
     dispatch(fetchGoalsData());
   }, [dispatch]);
-
-  const [isDesktop, setDesktop] = useState(window.innerWidth > 768);
-
-  const updateMedia = () => {
-    setDesktop(window.innerWidth > 768);
-  };
-
-  useEffect(() => {
-    window.addEventListener("resize", updateMedia);
-    return () => window.removeEventListener("resize", updateMedia);
-  });
 
   const [goalsBtn, setGoalsBtn] = useState(true);
   const [tasksBtn, setTasksBtn] = useState(false);
 
   return (
     <Fragment>
-      {isDesktop ? (
-        <DesktopNav />
-      ) : (
-        <div className={classes.navbar}>
-          <Navigation />
-        </div>
-      )}
       <div>
         <header className={classes.header}>
           <span>My Goals</span>
@@ -48,7 +32,7 @@ const Layout = (props) => {
             <button onClick={(e) => setGoalsBtn(!goalsBtn)}>Goals</button>
             <button onClick={(e) => setTasksBtn(!goalsBtn)}>Tasks</button>
           </div>
-          <div className={classes.content}>{goals && <Goals />}</div>
+          <div className={classes.content}>{goals.goalList && <Goals />}</div>
           {/* <div className={classes.navbar}>
               <Navigation />
             </div> */}

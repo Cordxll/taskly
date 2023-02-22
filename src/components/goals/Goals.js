@@ -8,7 +8,7 @@ import { addActions } from "../../store/addSlice";
 import { editActions } from "../../store/editSlice";
 
 const Goals = (props) => {
-  const goals = useSelector((state) => state.goals.goals);
+  const goals = useSelector((state) => state.goals.goalList);
 
   const addForm = useSelector((state) => state.add);
   const editForm = useSelector((state) => state.edit);
@@ -36,6 +36,7 @@ const Goals = (props) => {
                 timeline: item.timeline,
                 color: item.color,
                 completed: item.completed,
+                user: item.user,
               }}
             />
           </div>

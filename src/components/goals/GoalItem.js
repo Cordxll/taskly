@@ -11,13 +11,14 @@ import EditGoalForm from "./actions/EditGoalForm";
 import { useNavigate } from "react-router-dom";
 import { addActions } from "../../store/addSlice";
 import ReactDOMServer from "react-dom/server";
+import { format } from "date-fns";
 
 const GoalItem = (props) => {
   const dispatch = useDispatch();
 
   const editForm = useSelector((state) => state.edit);
 
-  const goals = useSelector((store) => store.goals.goals);
+  const goals = useSelector((store) => store.goals.goalList);
 
   const existingItem = goals.filter(
     (item) => item.id === Number(props.item.id)
@@ -37,16 +38,19 @@ const GoalItem = (props) => {
     dispatch(uiActions.toggle());
   };
 
-  const buttonBorder = ReactDOMServer.renderToString(color.backgroundColor);
+  // const buttonBorder = ReactDOMServer.renderToString(color.backgroundColor);
   const buttonStyle = {
-    border: `0.1em solid ${buttonBorder} `,
+    border: `0.1em solid ${color} `,
   };
 
   return (
     <>
       <Card>
         <div className={classes.goal}>
-          <button className={classes.themeColorBtn} style={color}></button>
+          <button
+            className={classes.themeColorBtn}
+            style={{ backgroundColor: color }}
+          ></button>
           <span className={classes.headerText}>{title}</span>
           <MoreButton
             className={classes.moreBtn}
@@ -70,13 +74,13 @@ const GoalItem = (props) => {
               />
               <span
                 className={classes.goalTime}
-                style={{ fontWeight: "bold", color: buttonBorder }}
+                style={{ fontWeight: "bold", color: color }}
               >
                 Completed
               </span>
             </div>
           ) : (
-            timeline.trim() !== "" && (
+            format(new Date(timeline), "yyyy-MM-dd").trim() !== "" && (
               <div className={classes.date}>
                 <img
                   className={classes.timeClock}

@@ -8,8 +8,10 @@ import { goalsActions } from "../../../store/goalsSlice";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { format } from "date-fns";
+import { sendGoalsData } from "../../../store/goals-actions";
 
 const isNotEmpty = (value) => value.trim() !== "";
+let isInitial = true;
 
 const EditGoalForm = (props) => {
   const {
@@ -34,15 +36,18 @@ const EditGoalForm = (props) => {
   const editTitle = useSelector((state) => state.edit.title);
 
   const params = useParams();
-  const goals = useSelector((store) => store.goals.goals);
+  const goals = useSelector((store) => store.goals.goalList);
+  const changedGoals = useSelector((store) => store.goals);
   const navigate = useNavigate();
   const existingItem = goals.filter((user) => user.id === Number(params.id));
 
-  const { id, title, description, timeline, color, completed } =
+  const { id, title, description, timeline, color, completed, user } =
     existingItem[0];
+  console.log(color);
+
+  const [formHasChanged, setFormHasChanged] = useState(false);
 
   let formIsValid = true;
-  const [formHasChanged, setFormHasChanged] = useState(false);
 
   const [values, setValues] = useState({
     id,
@@ -50,7 +55,20 @@ const EditGoalForm = (props) => {
     description,
     timeline,
     completed,
+    user,
+    color,
   });
+
+  useEffect(() => {
+    if (isInitial) {
+      isInitial = false;
+      return;
+    }
+    if (formHasChanged) {
+      dispatch(sendGoalsData(values));
+      // console.log(goals);
+    }
+  }, [values, dispatch, formHasChanged]);
   if (values.title.trim() === "") {
     formIsValid = false;
   } else {
@@ -59,7 +77,7 @@ const EditGoalForm = (props) => {
 
   const handleEditItem = (event) => {
     event.preventDefault();
-
+    setFormHasChanged(true);
     dispatch(
       goalsActions.changeInputs({
         id: values.id,
@@ -67,6 +85,7 @@ const EditGoalForm = (props) => {
         description: values.description,
         timeline: values.timeline,
         completed: values.completed,
+        user: values.user,
       })
     );
     navigate("/Layout");
@@ -79,14 +98,15 @@ const EditGoalForm = (props) => {
   };
 
   const changeColorHandler = (colors) => {
-    if (values.color !== color) {
-      setFormHasChanged(true);
-    }
+    setFormHasChanged(true);
+    setValues({
+      ...values,
+      color: colors,
+    });
     dispatch(
       goalsActions.changeColor({
         id: existingItem[0].id,
-
-        color: { backgroundColor: colors },
+        color: colors,
       })
     );
   };

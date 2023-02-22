@@ -19,7 +19,7 @@ const AddGoalForm = (props) => {
     title: "",
     description: "",
     timeline: "",
-    color: {},
+    color: "",
   });
 
   if (item.title.trim() === "") {
@@ -34,7 +34,7 @@ const AddGoalForm = (props) => {
 
   const changeColorHandler = (colors) => {
     console.log(colors);
-    setItem({ ...item, color: { backgroundColor: colors } });
+    setItem({ ...item, color: colors });
   };
 
   const submitHandler = (event) => {

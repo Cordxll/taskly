@@ -73,14 +73,14 @@ function App() {
   return (
     <AuthContext.Provider value={auth}>
       <Fragment>
-        {isDesktop ? (
-          <DesktopNav />
-        ) : (
-          <div className={classes.navbar}>
-            <Navigation />
-          </div>
-        )}
         <Router>
+          {isDesktop ? (
+            <DesktopNav />
+          ) : (
+            <div className={classes.navbar}>
+              <Navigation />
+            </div>
+          )}
           <Routes>
             <Route exact path="/" element={<HomePublic />} />
             <Route exact path="/Layout" element={<Layout />} />
