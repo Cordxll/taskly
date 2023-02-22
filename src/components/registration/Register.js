@@ -8,7 +8,7 @@ function Register() {
 
     let [username, setUsername] = useState("");
     let [password, setPassword] = useState("");
-    let [isMatching, setIsMatching] = useState(true);
+    let [isMatching, setIsMatching] = useState(false);
     let [email, setEmail] = useState("");
 
     const auth = useContext(AuthContext);
