@@ -30,7 +30,7 @@ const DesktopNav = () => {
           </div>
           
           <div className={classes.subcontainer}>
-            <Link to="/" className={classes.link}>
+            <Link to="/layout" className={classes.link}>
               <BiHome className={classes.icon}/>
               <p>Home</p>
             </Link>
