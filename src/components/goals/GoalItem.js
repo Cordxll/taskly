@@ -6,28 +6,30 @@ import CompletedTasks from "./CompletedTasks";
 import classes from "./GoalItem.module.css";
 import MoreButton from "./MoreButton";
 import TimeClock from "../pics/time.svg";
-import { goalsActions } from "../../store/goalsSlice";
 import { editActions } from "../../store/editSlice";
 import EditGoalForm from "./actions/EditGoalForm";
-import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { addActions } from "../../store/addSlice";
+import ReactDOMServer from "react-dom/server";
+import { format } from "date-fns";
 
 const GoalItem = (props) => {
   const dispatch = useDispatch();
 
   const editForm = useSelector((state) => state.edit);
 
-  const { id, title, color } = props.item;
-  // console.log(goal);
+  const goals = useSelector((store) => store.goals.goalList);
+
+  const existingItem = goals.filter(
+    (item) => item.id === Number(props.item.id)
+  );
+  const { id, title, description, timeline, color, completed } =
+    existingItem[0];
+
+  const navigate = useNavigate();
 
   const toggleEditFormHandler = () => {
-    console.log(props.item);
     dispatch(editActions.toggle());
-    // return async (dispatch) => {
-    //   await dispatch(goalsActions.changeTitle("hey"));
-    // };
-    return async (dispatch) => {
-      await props.onClose();
-    };
   };
 
   const showTasks = useSelector((state) => state.ui.taskIsVisible);
@@ -36,28 +38,64 @@ const GoalItem = (props) => {
     dispatch(uiActions.toggle());
   };
 
+  // const buttonBorder = ReactDOMServer.renderToString(color.backgroundColor);
+  const buttonStyle = {
+    border: `0.1em solid ${color} `,
+  };
+
   return (
     <>
       <Card>
         <div className={classes.goal}>
-          <button className={classes.themeColorBtn} style={color}></button>
-
+          <button
+            className={classes.themeColorBtn}
+            style={{ backgroundColor: color }}
+          ></button>
           <span className={classes.headerText}>{title}</span>
           <MoreButton
             className={classes.moreBtn}
-            onClick={toggleEditFormHandler.bind(null, props.item.id)}
+            onClick={() => navigate(`/Layout/EditModal/${id}`)}
             title="Update goal"
-            // goal={props.item}
+            goal={props}
+            key={id}
           />
-          <div className={classes.date}>
-            <img
-              className={classes.timeClock}
-              src={TimeClock}
-              alt="time clock"
-            />
-            <span className={classes.goalTime}>04/15/2023</span>
-          </div>
-          <button className={classes.itemButton} onClick={toggleGoalHandler}>
+          {description.trim() !== "" && (
+            <div className={classes.description}>
+              <span style={{ fontWeight: "bold" }}>Note: </span>
+              <span>{description}</span>
+            </div>
+          )}
+          {completed ? (
+            <div className={classes.date}>
+              <img
+                className={classes.timeClock}
+                src={TimeClock}
+                alt="time clock"
+              />
+              <span
+                className={classes.goalTime}
+                style={{ fontWeight: "bold", color: color }}
+              >
+                Completed
+              </span>
+            </div>
+          ) : (
+            format(new Date(timeline), "yyyy-MM-dd").trim() !== "" && (
+              <div className={classes.date}>
+                <img
+                  className={classes.timeClock}
+                  src={TimeClock}
+                  alt="time clock"
+                />
+                <span className={classes.goalTime}>{timeline}</span>
+              </div>
+            )
+          )}
+          <button
+            className={classes.itemButton}
+            onClick={toggleGoalHandler}
+            style={buttonStyle}
+          >
             View Tasks
           </button>
         </div>
@@ -76,9 +114,10 @@ const GoalItem = (props) => {
       {editForm.editFormIsVisible && (
         <div className={classes.modal}>
           <EditGoalForm
-            onClose={toggleEditFormHandler.bind(null, id)}
+            onClose={toggleEditFormHandler}
             title={editForm.title}
             goal={props.item}
+            key={id}
           />
         </div>
       )}

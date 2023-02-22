@@ -1,36 +1,5 @@
-// import { goalsActions } from "./goalsSlice";
-
-// const fetchGoalsData = () => {
-//   return (dispatch) => {
-//     // const fetchData = async () => {
-//     const response = [
-//       { id: 1, title: "Lose weight", color: { backgroundColor: "pink" } },
-//       {
-//         id: 2,
-//         title: "Learn new language",
-//         color: { backgroundColor: "blue" },
-//       },
-//       {
-//         id: 3,
-//         title: "Eat healthy",
-//         color: { backgroundColor: "purple" },
-//       },
-//     ];
-
-//     dispatch(
-//       goalsActions.replaceGoal({
-//         goals: response || [],
-//       })
-//     );
-
-//     return response;
-//     // };
-//   };
-// };
-
-// export default fetchGoalsData;
-
 import { goalsActions } from "./goalsSlice";
+import { Api } from "../hooks/Api";
 
 export const fetchGoalsData = () => {
   return async (dispatch) => {
@@ -42,49 +11,40 @@ export const fetchGoalsData = () => {
         },
         // mode: "no-cors",
       };
-      const response = await fetch("http://localhost:8080/goals", init);
+      const response = await fetch(`${Api}/goals`, init);
 
       if (!response.ok) {
         throw new Error("Could not fetch cart data!");
       }
 
       const data = await response.json();
-      console.log(data);
 
       return data;
     };
 
     try {
-      const cartData = await fetchData();
-      dispatch(
-        goalsActions.replaceGoal({
-          items: cartData || [],
-        })
-      );
+      const goalData = await fetchData();
+
+      dispatch(goalsActions.replaceGoal({ goalList: goalData }));
     } catch (error) {
       console.log("error");
     }
   };
 };
 
-export const sendCartData = (cart) => {
-  return async (dispatch) => {
-    console.log("pending");
-
+export const sendGoalsData = (goal) => {
+  return async () => {
     const sendRequest = async () => {
-      const response = await fetch(
-        "https://react-http-6b4a6.firebaseio.com/cart.json",
-        {
-          method: "PUT",
-          body: JSON.stringify({
-            items: cart.items,
-            totalQuantity: cart.totalQuantity,
-          }),
-        }
-      );
+      const response = await fetch(`${Api}/goals/update/${goal.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(goal),
+      });
 
       if (!response.ok) {
-        throw new Error("Sending cart data failed.");
+        throw new Error("Sending goal data failed.");
       }
     };
 

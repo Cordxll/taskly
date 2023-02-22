@@ -1,5 +1,18 @@
-header {
+/* header {
   padding: 0.7rem;
+} */
+
+.header {
+  padding: 0.7rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.completed {
+  color: black;
+  font-weight: 1rem;
 }
 .control_group {
   display: flex;
@@ -10,7 +23,7 @@ header {
 }
 .form {
   margin: 1.5rem;
-  width: 80%;
+  width: 80vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -42,4 +55,24 @@ header {
   padding: 0;
   clear: both;
   bottom: 0;
+}
+
+@media only screen and (min-width: 768px) {
+  .form label {
+    align-self: start;
+    padding: 0 3rem;
+  }
+
+  .container header {
+    padding: 1rem 4rem;
+    margin: 1 5rem;
+    font-size: 2rem;
+  }
+
+  .header {
+    margin-right: 17rem;
+  }
+  .header label {
+    font-weight: 7rem;
+  }
 }

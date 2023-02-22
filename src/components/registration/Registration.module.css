@@ -1,40 +1,65 @@
-.login {
-    padding: 0.3rem 3rem;
+.error input{
+    border:2px solid red;
+    color: red;
+}
+.error label{
+    color: red !important;
+}
+.error p{
+    color: red !important;
+    font-size: small;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80vh;
 }
 
 .box {
     max-width: 32rem;
     width: 75%;
-    height: 55vh;
-    max-height: 45rem;
-    padding: 15px 10px;
-    margin: auto;
+    padding: 5%;
     box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
     border-radius: 8px;
-}
-
-.box form {
-    display: flex;
-    justify-content: center;
+    border: solid;
+    margin-top: 1rem;
 }
 
 .form {
     height: 100%;
     width: 100%;
 }
+.form label{
+    padding-bottom: 1.5%;
+    font-weight: 550;
+    border: none;
 
-.box p {
-    font-size: .75rem;
-    color: black;
-    
+}
+
+.form input{
+    padding: 0.75rem;
+    width: 100%;
+    border-radius: 10px;
+    border-color: black;
+}
+
+.form div{
+    margin-top: 2rem;
+    border: none;
+}
+
+.form p{
+    color: rgb(66, 66, 66);
 }
 
 .box button {
     padding: 2.5%;
     border-radius: 8px;
-    border: 1px solid #c78b8c;
+    border: 2px solid black;
     width: 100%;
-    background-color: #c78b8c;
+    background-color: rgb(0, 132, 255);
     font-weight: bold;
     color: white;
 }
@@ -43,63 +68,24 @@
 .box button:hover {
     padding: 2.5%;
     border-radius: 8px;
-    border: 1px solid pink;
-    background-color: pink;
+    background-color: rgb(0, 86, 167);
     cursor: pointer;
-    color: black;
     font-weight: bold;
 }
 
-.username input,
-.username label,
-.password input,
-.password label,
-.email input,
-.email label {
+.form label, input{
     display: block;
-    margin: auto;
-}
-
-.username input,
-.password input,
-.email input {
-    border: 1px solid lightgray;
-    border-radius: 10px;
-    padding: 2.5%;
-    width: 100%;
-}
-
-.username input:focus,
-.password input:focus,
-.email input:focus {
-    outline: none;
-    border: 1px solid maroon;
-    border-radius: 10px;
-}
-
-.username label,
-.password label,
-.email label {
     color: black;
-    font-weight: bold;
-    color: #c78b8c
 }
-
-.username,
-.password,
-.email,
-.register {
-    margin-top: 20px;
-    margin-bottom: 10px;
-    padding: 5%;
-    width: 100%;
-}
-
 
 @media screen and (min-width: 640px) {
+    .container {
+        height: 100vh;
+    }
     .box {
         width: 50%;
         margin: auto;
+        padding: 2%;
     }
     
 }

@@ -71,3 +71,14 @@
   top: 1.05em;
   left: 1.9em;
 }
+
+@media screen and (min-width: 768px) {
+  .main {
+    /* color: black;
+    width: 100%; */
+    height: 60vh;
+    padding: 0;
+    background-color: white;
+    border-radius: 15px 15px 0 0;
+  }
+} ;

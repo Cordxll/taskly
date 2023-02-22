@@ -1,0 +1,111 @@
+/* * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+} 
+
+
+section h1 {
+  color: #fff;
+  font-size: 50px;
+  text-transform: uppercase;
+  opacity: 1;
+}
+
+section:target {
+  opacity: 1;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+}
+
+section:target h1 {
+  opacity: 0;
+  animation: 2s fadeIn forwards 0.5s;
+}
+
+
+
+@keyframes fadeIn {
+  100% {
+    opacity: 1;
+  }
+} */
+
+:root {
+  --primary-color: #d96aa7;
+  --secondary-color: #ba8a8a;
+  --complimentary-color: #88bfb5;
+  --contrast-color: #f2e527;
+  --light-color: #d2a9d9;
+}
+
+.container {
+  background: #f8f7f7;
+  min-height: 100vh;
+  font-family: Montserrat, sans-serif;
+}
+
+.links h1 {
+  color: #fff;
+  font-size: 50px;
+  text-transform: uppercase;
+  opacity: 1;
+}
+
+.navigation {
+  position: fixed;
+  left: 0;
+  /* z-index: 50; */
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  height: 100vh;
+  width: 6em;
+  background: #c78b8c;
+}
+
+.navigation button {
+  background-color: transparent;
+  stroke-opacity: 0;
+  border: none;
+}
+
+.icon {
+  background-color: transparent;
+  height: 70%;
+  width: 70%;
+}
+
+.circle_plus {
+  height: 6em;
+  width: 6em;
+  font-size: 100% /*Will change icon size*/;
+}
+
+.circle_plus .circle {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+  border: solid 0.8em #f0e8e8;
+}
+
+.circle_plus .circle .horizontal {
+  position: absolute;
+  background-color: #e5dcdc;
+  width: 2.4em;
+  height: 0.7em;
+  top: 1.9em;
+  left: 1.05em;
+}
+.circle_plus .circle .vertical {
+  position: absolute;
+  background-color: #ece0e1;
+  width: 0.7em;
+  height: 2.4em;
+  top: 1.05em;
+  left: 1.9em;
+}

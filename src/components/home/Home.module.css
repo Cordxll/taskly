@@ -36,8 +36,9 @@
 
     border-radius: 4px;
     font-weight: 600;
-
+    text-decoration: unset;
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    border: solid;
     
 }
 
@@ -47,6 +48,7 @@
 
 .btn1{
     background-color: black;
+    border-color: rgb(56, 56, 56);
     color: white;
 }
 .btn1:hover{
@@ -58,6 +60,7 @@
 .btn2{
     background-color: white;
     border-color: black;
+    color:black;
 }
 
 .btn2:hover{

@@ -70,4 +70,39 @@
   background-color: transparent;
   border: none;
   opacity: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.colorPicker::-webkit-color-swatch-wrapper {
+  padding: 0;
+  margin: 0;
+  background: none;
+}
+.colorPicker::-webkit-color-swatch {
+  border: none;
+}
+
+@media only screen and (min-width: 768px) {
+  .colors {
+    width: 100%;
+    /* margin: 0.6rem 0.4rem; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .colors label {
+    width: 90%;
+    margin: 0.6rem 0 0.6rem 6rem;
+  }
+  .colorText {
+    /* align-self: center; */
+  }
+  .colorBtns {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin: 0.4rem 7rem;
+  }
 }

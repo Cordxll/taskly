@@ -3,10 +3,12 @@
   grid-template-columns: 4fr 1fr;
   justify-content: center;
   align-items: center;
-  margin: 0.3rem 3.3rem;
+  margin-left: 1.5rem;
+  margin-right: 0.5rem;
 }
 .submitButton {
-  padding: 1rem;
+  /* padding: 1rem; */
+  margin: 1rem 1rem 2rem 1rem;
   grid-column: 1;
   height: 50px;
   background-color: rgb(44, 42, 42);
@@ -17,8 +19,23 @@
 }
 
 .deleteButton {
-  padding: 1rem;
+  margin: 1rem 2rem 2rem 0.5rem;
   grid-column: 2;
   border: none;
   background-color: transparent;
+}
+
+@media only screen and (min-width: 768px) {
+  .submit {
+    margin-left: 10rem;
+    margin-right: 15rem;
+  }
+  .submitButton {
+    margin: 1rem 1rem 2rem 5rem;
+    font-size: 1.5rem;
+  }
+
+  .deleteButton {
+    margin: 1rem 2rem 2rem 0;
+  }
 }
