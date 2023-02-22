@@ -48,6 +48,20 @@ section:target h1 {
   font-family: Montserrat, sans-serif;
 }
 
+.subcontainer {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  height: fit-content;
+}
+.subcontainer + .subcontainer{
+  margin-top: 40px;
+  height: 35%;
+  justify-content: space-evenly;
+}
+.last{
+  border-top: 1px solid darkgray;
+}
 .links h1 {
   color: #fff;
   font-size: 50px;
@@ -60,23 +74,52 @@ section:target h1 {
   left: 0;
   /* z-index: 50; */
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   flex-direction: column;
   height: 100vh;
-  width: 6em;
-  background: #c78b8c;
+  width: 7.5em;
+  background: #f5f5f5;
+  padding-top: .75em;
+  padding:10px
 }
 
-.navigation button {
+.link{
+  width: 100%;
+  text-decoration: none;
   background-color: transparent;
   stroke-opacity: 0;
   border: none;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  color: rgb(31 41 55);
+  font-size: small; 
+}
+
+.link:hover{
+  color: #79a7fd ;
+  cursor: pointer;
 }
 
 .icon {
-  background-color: transparent;
-  height: 70%;
-  width: 70%;
+  height: 1.25rem;
+  width: 1.25rem;
+}
+
+.plus{
+  width: 100%;
+  border-radius: 5px;
+  padding: 8px;
+  background-image: linear-gradient(to right, #8360c3, #79a7fd) !important;
+  color: white !important;
+  font-weight: 600;
+  justify-content: center;
+}
+
+.plus:hover{
+  background-image: linear-gradient(to right, #8360c381, #79a7fd5b) !important;
+  cursor: pointer;
 }
 
 .circle_plus {
