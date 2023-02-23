@@ -4,6 +4,7 @@ import uiSlice from "./uiSlice";
 import goalsSlice from "./goalsSlice";
 import editSlice from "./editSlice";
 import dateSlice from "./dateSlice";
+import userSlice from "./userSlice";
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     edit: editSlice.reducer,
     goals: goalsSlice.reducer,
     selectedDate: dateSlice.reducer,
+    user: userSlice.reducer
   },
 });
 
