@@ -5,6 +5,7 @@ import goalsSlice from "./goalsSlice";
 import editSlice from "./editSlice";
 import dateSlice from "./dateSlice";
 import userSlice from "./userSlice";
+import tasksSlice from "./tasksSlice";
 
 const store = configureStore({
   reducer: {
@@ -12,8 +13,9 @@ const store = configureStore({
     add: addSlice.reducer,
     edit: editSlice.reducer,
     goals: goalsSlice.reducer,
+    tasks: tasksSlice.reducer,
     selectedDate: dateSlice.reducer,
-    user: userSlice.reducer
+    user: userSlice.reducer,
   },
 });
 

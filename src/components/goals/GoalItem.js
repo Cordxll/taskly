@@ -9,9 +9,6 @@ import TimeClock from "../pics/time.svg";
 import { editActions } from "../../store/editSlice";
 import EditGoalForm from "./actions/EditGoalForm";
 import { useNavigate } from "react-router-dom";
-import { addActions } from "../../store/addSlice";
-import ReactDOMServer from "react-dom/server";
-import { format } from "date-fns";
 
 const GoalItem = (props) => {
   const dispatch = useDispatch();
@@ -23,6 +20,7 @@ const GoalItem = (props) => {
   const existingItem = goals.filter(
     (item) => item.id === Number(props.item.id)
   );
+
   const { id, title, description, timeline, color, completed } =
     existingItem[0];
 
@@ -80,7 +78,7 @@ const GoalItem = (props) => {
               </span>
             </div>
           ) : (
-            format(new Date(timeline), "yyyy-MM-dd").trim() !== "" && (
+            timeline.trim() !== "" && (
               <div className={classes.date}>
                 <img
                   className={classes.timeClock}

@@ -27,7 +27,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: stretch;
 }
 .form label {
   align-self: start;
@@ -36,7 +36,7 @@
 
 .textInput input {
   margin: 0.5rem 0;
-  width: 90%;
+  width: 100%;
   height: 35px;
   font-size: 1rem;
   border-radius: 9px;
@@ -74,5 +74,26 @@
   }
   .header label {
     font-weight: 7rem;
+  }
+  .form {
+    margin: 1.5rem;
+    width: 80vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+  }
+  .form label {
+    align-self: start;
+    padding: 0 7rem;
+  }
+  .textInput input {
+    margin-top: 0.5rem;
+    margin-left: 6rem;
+
+    width: 70%;
+    height: 35px;
+    font-size: 1rem;
+    border-radius: 9px;
   }
 }
