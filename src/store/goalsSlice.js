@@ -1,57 +1,35 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { format } from "date-fns";
 
 const goalsSlice = createSlice({
   name: "goals",
   initialState: {
-    goalList: [
-      // {
-      //   id: 1,
-      //   title: "Lose weight",
-      //   description: "Getting ready for the wedding",
-      //   timeline: format(new Date(2023, 4, 15), "yyyy-MM-dd"),
-      //   color: { backgroundColor: "pink" },
-      //   completed: false,
-      // },
-      // {
-      //   id: 2,
-      //   title: "Learn new language",
-      //   description: "new hobby",
-      //   timeline: format(new Date(2023, 6, 1), "yyyy-MM-dd"),
-      //   color: { backgroundColor: "blue" },
-      //   completed: false,
-      // },
-      // {
-      //   id: 3,
-      //   title: "Eat healthy",
-      //   description: "less stomach issues",
-      //   timeline: format(new Date(2023, 9, 15), "yyyy-MM-dd"),
-      //   color: { backgroundColor: "purple" },
-      //   completed: true,
-      // },
-    ],
+    goalList: [],
     changed: false,
   },
   reducers: {
     replaceGoal(state, action) {
       state.goalList = action.payload.goalList;
     },
+    changeStatus(state) {
+      state.changed = false;
+    },
     changeColor(state, action) {
+      state.changed = true;
       const newItem = action.payload;
       const existingItem = state.goalList.find(
         (item) => item.id === newItem.id
       );
-      state.changed = true;
+
       if (existingItem) {
         existingItem.color = newItem.color;
       }
     },
     changeInputs(state, action) {
+      state.changed = true;
       const newItem = action.payload;
       const existingItem = state.goalList.find(
         (item) => item.id === newItem.id
       );
-      state.changed = true;
       if (existingItem) {
         existingItem.title = newItem.title;
         existingItem.description = newItem.description;
@@ -61,8 +39,8 @@ const goalsSlice = createSlice({
       }
     },
     addGoal(state, action) {
-      const newItem = action.payload;
       state.changed = true;
+      const newItem = action.payload;
       state.goalList.push({
         id: newItem.id,
         title: newItem.title,
@@ -72,8 +50,8 @@ const goalsSlice = createSlice({
       });
     },
     deleteGoal: (state, action) => {
-      const id = action.payload;
       state.changed = true;
+      const id = action.payload;
       const existingItem = state.goalList.find((user) => user.id === id);
       if (existingItem) {
         state.goals = state.goalList.filter((user) => user.id !== id);

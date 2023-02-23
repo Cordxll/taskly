@@ -9,6 +9,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { format } from "date-fns";
 import { sendGoalsData } from "../../../store/goals-actions";
+import { deleteGoal } from "../../../store/goals-actions";
 
 const isNotEmpty = (value) => value.trim() !== "";
 let isInitial = true;
@@ -43,7 +44,6 @@ const EditGoalForm = (props) => {
 
   const { id, title, description, timeline, color, completed, user } =
     existingItem[0];
-  console.log(color);
 
   const [formHasChanged, setFormHasChanged] = useState(false);
 
@@ -69,6 +69,7 @@ const EditGoalForm = (props) => {
       // console.log(goals);
     }
   }, [values, dispatch, formHasChanged]);
+
   if (values.title.trim() === "") {
     formIsValid = false;
   } else {
@@ -94,6 +95,8 @@ const EditGoalForm = (props) => {
   const handleRemoveItem = () => {
     console.log(values.id);
     dispatch(goalsActions.deleteGoal(values.id));
+    dispatch(deleteGoal(values));
+
     navigate("/Layout");
   };
 
@@ -171,7 +174,8 @@ const EditGoalForm = (props) => {
                   onChange={(e) => {
                     setValues({
                       ...values,
-                      timeline: format(new Date(e.target.value), "yyyy-MM-dd"),
+                      // timeline: format(new Date(e.target.value), "yyyy-MM-dd"),
+                      timeline: e.target.value,
                     });
                     setFormHasChanged(true);
                   }}
