@@ -44,7 +44,54 @@ export const sendGoalsData = (goal) => {
       });
 
       if (!response.ok) {
-        throw new Error("Sending goal data failed.");
+        throw new Error("Updating goal data failed.");
+      }
+    };
+
+    try {
+      await sendRequest();
+    } catch (error) {
+      console.log("error");
+    }
+  };
+};
+
+export const createGoal = (goal) => {
+  return async (dispatch) => {
+    const sendRequest = async () => {
+      const response = await fetch(`${Api}/goals/create`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(goal),
+      });
+
+      if (!response.ok) {
+        throw new Error("Creating goal failed.");
+      }
+    };
+
+    try {
+      await sendRequest();
+    } catch (error) {
+      console.log("error");
+    }
+  };
+};
+
+export const deleteGoal = (goal) => {
+  return async () => {
+    const sendRequest = async () => {
+      const response = await fetch(`${Api}/goals/delete/${goal.id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Deleting goal failed.");
       }
     };
 

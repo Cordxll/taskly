@@ -6,10 +6,10 @@ import { goalsActions } from "../../../store/goalsSlice";
 import { useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { format } from "date-fns";
+import { createGoal, fetchGoalsData } from "../../../store/goals-actions";
 
 const AddGoalForm = (props) => {
   const dispatch = useDispatch();
-
   const newId = Math.random();
 
   let formIsValid = false;
@@ -28,17 +28,21 @@ const AddGoalForm = (props) => {
     formIsValid = true;
   }
 
-  useEffect(() => {
-    console.log(item.color);
-  }, [item.color]);
-
   const changeColorHandler = (colors) => {
-    console.log(colors);
     setItem({ ...item, color: colors });
   };
 
   const submitHandler = (event) => {
     event.preventDefault();
+
+    dispatch(
+      createGoal({
+        title: item.title,
+        description: item.description,
+        timeline: item.timeline,
+        color: item.color,
+      })
+    );
 
     dispatch(
       goalsActions.addGoal({
@@ -49,8 +53,7 @@ const AddGoalForm = (props) => {
         color: item.color,
       })
     );
-    console.log(item);
-
+    // dispatch(fetchGoalsData());
     props.onClose();
   };
 
@@ -93,7 +96,7 @@ const AddGoalForm = (props) => {
                   onChange={(e) =>
                     setItem({
                       ...item,
-                      timeline: format(new Date(e.target.value), "yyyy-MM-dd"),
+                      timeline: e.target.value,
                     })
                   }
                 />
