@@ -1,0 +1,50 @@
+.container{
+    color: black;
+    padding-bottom: 5%;
+    padding-top: 5%;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
+.button{
+    all: unset;
+}
+
+.arrow{
+    color: lightpink;
+    font-size:x-large;
+}
+
+.dates{
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap:4px
+}
+.card{
+    all: unset;
+    border-radius: 10px;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left:3px;
+    padding-right: 3px;
+    border: 2px;
+    width: max-content;
+}
+
+.selected{
+    all: unset;
+    background-color: lightpink;
+    color: white;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    border: 2px solid white;
+    border-radius: 10px;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left:3px;
+    padding-right: 3px;
+    border: 2px;
+}
