@@ -7,7 +7,11 @@ import EditGoalForm from "./actions/EditGoalForm";
 import { addActions } from "../../store/addSlice";
 import { editActions } from "../../store/editSlice";
 import { fetchGoalsData } from "../../store/goals-actions";
+import AddButton from "./actions/AddButton";
+import Layout from "../layout/Layout";
+import { goalsActions } from "../../store/goalsSlice";
 
+let initial = true;
 const Goals = (props) => {
   const goals = useSelector((state) => state.goals.goalList);
   const goalChanged = useSelector((state) => state.goals.changed);
@@ -21,8 +25,13 @@ const Goals = (props) => {
   }, [dispatch]);
 
   useEffect(() => {
+    if (initial) {
+      initial = false;
+      return;
+    }
     if (goalChanged) {
       dispatch(fetchGoalsData());
+      dispatch(goalsActions.changeStatus());
     }
   }, [dispatch, goalChanged]);
 
@@ -37,6 +46,7 @@ const Goals = (props) => {
   //display only uncompleted goals
   return (
     <Fragment>
+      <Layout />
       <div className={classes.main}>
         {goals.map(
           (item) =>
@@ -57,6 +67,12 @@ const Goals = (props) => {
               </div>
             )
         )}
+        <AddButton
+          onClick={() => {
+            toggleSaveFormHandler();
+            dispatch(addActions.setTitle("New Goal"));
+          }}
+        />
       </div>
 
       {editForm.editFormIsVisible && (

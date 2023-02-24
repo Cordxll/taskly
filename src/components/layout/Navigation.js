@@ -8,10 +8,10 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addActions } from "../../store/addSlice";
 const Navigation = (props) => {
-  const dispatch = useDispatch();
-  const toggleSaveFormHandler = () => {
-    dispatch(addActions.toggle());
-  };
+  // const dispatch = useDispatch();
+  // const toggleSaveFormHandler = () => {
+  //   dispatch(addActions.toggle());
+  // };
 
   const navigate = useNavigate();
   const homePage = () => {
@@ -24,16 +24,16 @@ const Navigation = (props) => {
           <li>
             <button className={classes.homeButton} onClick={homePage}>
               <img className={classes.icon} src={Home} alt="homepage" />
-              <span>Home</span>
+              {/* <span>Home</span> */}
             </button>
           </li>
           <li>
             <button className={classes.calendarButton}>
               <img className={classes.icon} src={Calendar} alt="calendar" />
-              <span>Calendar</span>
+              {/* <span>Calendar</span> */}
             </button>
           </li>
-          <li>
+          {/* <li>
             <button
               className={classes.addButton}
               onClick={toggleSaveFormHandler}
@@ -45,17 +45,17 @@ const Navigation = (props) => {
                 </div>
               </div>
             </button>
-          </li>
+          </li> */}
           <li>
             <button className={classes.statsButton}>
               <img className={classes.icon} src={Stats} alt="statistics" />
-              <span>Statistics</span>
+              {/* <span>Statistics</span> */}
             </button>
           </li>
           <li>
             <button className={classes.profileButton}>
               <img className={classes.icon} src={Profile} alt="profile" />
-              <span>Profile</span>
+              {/* <span>Profile</span> */}
             </button>
           </li>
         </ul>

@@ -2,12 +2,14 @@ import classes from "./SaveCard.module.css";
 
 const SaveCard = (props) => {
   const valid = props.valid;
+  const title = props.title;
   return (
     <>
       <div className={classes.submit}>
         {valid && (
           <button className={classes.submitButton} onClick={props.onClick}>
-            Create new goal
+            {/* Create new goal */}
+            {title}
           </button>
         )}
         {!valid && (
@@ -17,7 +19,7 @@ const SaveCard = (props) => {
             disabled={!valid}
             style={{ opacity: 0.5 }}
           >
-            Create new goal
+            {title}
           </button>
         )}
       </div>

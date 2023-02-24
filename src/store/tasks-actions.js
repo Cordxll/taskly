@@ -1,4 +1,3 @@
-import { goalsActions } from "./goalsSlice";
 import { Api } from "../hooks/Api";
 import { tasksActions } from "./tasksSlice";
 
@@ -15,7 +14,7 @@ export const fetchTasksData = () => {
       const response = await fetch(`${Api}/task`, init);
 
       if (!response.ok) {
-        throw new Error("Could not fetch cart data!");
+        throw new Error("Could not fetch task data!");
       }
 
       const data = await response.json();
@@ -25,7 +24,6 @@ export const fetchTasksData = () => {
 
     try {
       const taskData = await fetchData();
-      console.log(taskData);
 
       dispatch(tasksActions.replaceTask({ taskList: taskData }));
     } catch (error) {
@@ -34,29 +32,29 @@ export const fetchTasksData = () => {
   };
 };
 
-// export const updateTask = (goal) => {
-//   return async () => {
-//     const sendRequest = async () => {
-//       const response = await fetch(`${Api}/goals/update/${goal.id}`, {
-//         method: "PUT",
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify(goal),
-//       });
+export const updateTask = (task) => {
+  return async () => {
+    const sendRequest = async () => {
+      const response = await fetch(`${Api}/task/update/${task.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(task),
+      });
 
-//       if (!response.ok) {
-//         throw new Error("Updating goal data failed.");
-//       }
-//     };
+      if (!response.ok) {
+        throw new Error("Updating task data failed.");
+      }
+    };
 
-//     try {
-//       await sendRequest();
-//     } catch (error) {
-//       console.log("error");
-//     }
-//   };
-// };
+    try {
+      await sendRequest();
+    } catch (error) {
+      console.log("error");
+    }
+  };
+};
 
 export const createTask = (task) => {
   return async () => {
@@ -82,25 +80,25 @@ export const createTask = (task) => {
   };
 };
 
-// export const deleteTask = (task) => {
-//   return async () => {
-//     const sendRequest = async () => {
-//       const response = await fetch(`${Api}/goals/delete/${goal.id}`, {
-//         method: "DELETE",
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//       });
+export const deleteTask = (task) => {
+  return async () => {
+    const sendRequest = async () => {
+      const response = await fetch(`${Api}/task/delete/${task.id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-//       if (!response.ok) {
-//         throw new Error("Deleting goal failed.");
-//       }
-//     };
+      if (!response.ok) {
+        throw new Error("Deleting task failed.");
+      }
+    };
 
-//     try {
-//       await sendRequest();
-//     } catch (error) {
-//       console.log("error");
-//     }
-//   };
-// };
+    try {
+      await sendRequest();
+    } catch (error) {
+      console.log("error");
+    }
+  };
+};

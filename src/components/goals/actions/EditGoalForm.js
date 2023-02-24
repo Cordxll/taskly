@@ -1,5 +1,5 @@
 import useInput from "../../ui/UseInput";
-import classes from "./BasicForm.module.css";
+import classes from "../../ui/EditModule.module.css";
 import Modal from "../../ui/Modal";
 import EditCard from "./EditCard";
 import ColorPicker from "../ColorPicker";
@@ -15,30 +15,11 @@ const isNotEmpty = (value) => value.trim() !== "";
 let isInitial = true;
 
 const EditGoalForm = (props) => {
-  const {
-    value: titleValue,
-    isValid: titleIsValid,
-    hasError: titleHasError,
-    valueChangeHandler: titleChangeHandler,
-    inputBlurHandler: titleBlurHandler,
-    reset: resetTitle,
-  } = useInput(isNotEmpty);
-
-  const {
-    value: descriptionValue,
-    isValid: descriptionIsValid,
-    hasError: descriptioneHasError,
-    valueChangeHandler: descriptionChangeHandler,
-    inputBlurHandler: descriptionBlurHandler,
-    reset: resetDescription,
-  } = useInput(isNotEmpty);
-
   const dispatch = useDispatch();
   const editTitle = useSelector((state) => state.edit.title);
 
   const params = useParams();
   const goals = useSelector((store) => store.goals.goalList);
-  const changedGoals = useSelector((store) => store.goals);
   const navigate = useNavigate();
   const existingItem = goals.filter((user) => user.id === Number(params.id));
 
@@ -89,7 +70,7 @@ const EditGoalForm = (props) => {
         user: values.user,
       })
     );
-    navigate("/Layout");
+    navigate("/Goals");
   };
 
   const handleRemoveItem = () => {
@@ -97,7 +78,7 @@ const EditGoalForm = (props) => {
     dispatch(goalsActions.deleteGoal(values.id));
     dispatch(deleteGoal(values));
 
-    navigate("/Layout");
+    navigate("/Goals");
   };
 
   const changeColorHandler = (colors) => {
@@ -115,24 +96,11 @@ const EditGoalForm = (props) => {
   };
 
   return (
-    <Modal onClose={() => navigate("/Layout")}>
+    <Modal onClose={() => navigate("/Goals")}>
       <div className={classes.container}>
         <form onSubmit={handleEditItem}>
           <div className={classes.header}>
             <header>{editTitle}</header>
-            <div className={classes.completed}>
-              <label htmlFor="timeline">Completed</label>
-              <input
-                type="checkbox"
-                onChange={(e) => {
-                  setValues({
-                    ...values,
-                    completed: !values.completed,
-                  });
-                  setFormHasChanged(true);
-                }}
-              />
-            </div>
           </div>
 
           <div className={classes.control_group}>
@@ -164,7 +132,6 @@ const EditGoalForm = (props) => {
                     });
                     setFormHasChanged(true);
                   }}
-                  onBlur={descriptionBlurHandler}
                 />
                 <label htmlFor="timeline">Timeline</label>
                 <input
@@ -181,10 +148,24 @@ const EditGoalForm = (props) => {
                   }}
                 />
               </div>
+
               <ColorPicker goal={values} onChange={changeColorHandler} />
               {/* {titleHasError && (
                 <p className="error-text">Please enter a title.</p>
               )} */}
+              <div className={classes.completed}>
+                <label htmlFor="timeline">Completed</label>
+                <input
+                  type="checkbox"
+                  onChange={(e) => {
+                    setValues({
+                      ...values,
+                      completed: !values.completed,
+                    });
+                    setFormHasChanged(true);
+                  }}
+                />
+              </div>
             </div>
           </div>
           <EditCard

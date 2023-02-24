@@ -1,14 +1,12 @@
-import classes from "../../ui/EditModule.module.css";
-import Modal from "../../ui/Modal";
-import SaveCard from "./SaveCard";
-import ColorPicker from "../ColorPicker";
-import { goalsActions } from "../../../store/goalsSlice";
+import classes from "../ui/EditModule.module.css";
+import Modal from "../ui/Modal";
+import SaveCard from "../goals/actions/SaveCard";
+import { tasksActions } from "../../store/tasksSlice";
 import { useDispatch } from "react-redux";
-import { useState, useEffect } from "react";
-import { format } from "date-fns";
-import { createGoal, fetchGoalsData } from "../../../store/goals-actions";
+import { useState } from "react";
+import { createTask, fetchTasksData } from "../../store/tasks-actions";
 
-const AddGoalForm = (props) => {
+const AddTaskForm = (props) => {
   const dispatch = useDispatch();
   const newId = Math.random();
 
@@ -18,8 +16,7 @@ const AddGoalForm = (props) => {
     id: newId,
     title: "",
     description: "",
-    timeline: "",
-    color: "",
+    time: "",
   });
 
   if (item.title.trim() === "") {
@@ -28,33 +25,26 @@ const AddGoalForm = (props) => {
     formIsValid = true;
   }
 
-  const changeColorHandler = (colors) => {
-    setItem({ ...item, color: colors });
-  };
-
   const submitHandler = (event) => {
     event.preventDefault();
 
     dispatch(
-      goalsActions.addGoal({
-        id: item.id,
+      createTask({
         title: item.title,
         description: item.description,
-        timeline: item.timeline,
-        color: item.color,
+        time: item.time,
       })
     );
 
     dispatch(
-      createGoal({
+      tasksActions.addTask({
+        id: item.id,
         title: item.title,
         description: item.description,
-        timeline: item.timeline,
-        color: item.color,
+        time: item.time,
       })
     );
-    dispatch(fetchGoalsData());
-
+    dispatch(fetchTasksData());
     props.onClose();
   };
 
@@ -90,29 +80,25 @@ const AddGoalForm = (props) => {
                     })
                   }
                 />
-                <label htmlFor="timeline">Timeline</label>
+                <label htmlFor="time">Time</label>
                 <input
                   id="datePicker"
                   type="date"
                   onChange={(e) =>
                     setItem({
                       ...item,
-                      timeline: e.target.value,
+                      time: e.target.value,
                     })
                   }
                 />
               </div>
-              <ColorPicker goal={item} onChange={changeColorHandler} />
-              {/* {titleHasError && (
-                <p className="error-text">Please enter a title.</p>
-              )} */}
             </div>
           </div>
           <SaveCard
             onClick={submitHandler}
-            goal={item}
+            item={item}
             valid={formIsValid}
-            title={"Create"}
+            title={props.title}
           />
         </form>
       </div>
@@ -120,4 +106,4 @@ const AddGoalForm = (props) => {
   );
 };
 
-export default AddGoalForm;
+export default AddTaskForm;

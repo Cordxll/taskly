@@ -11,9 +11,9 @@
   background-color: white;
   border-radius: 15px 15px 0 0;
   box-shadow: 0 0 50px hsla(0, 43%, 11%, 0.314);
-  height: 10vh;
+  height: 8vh;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   justify-content: center;
   justify-items: center;
   align-items: center;
@@ -37,14 +37,14 @@
 
 .icon {
   background-color: transparent;
-  height: 70%;
-  width: 70%;
+  height: 50%;
+  width: 50%;
 }
 
-.circle_plus {
+/* .circle_plus {
   height: 6em;
   width: 6em;
-  font-size: 75% /*Will change icon size*/;
+  font-size: 75% 
 }
 
 .circle_plus .circle {
@@ -70,7 +70,7 @@
   height: 2.4em;
   top: 1.05em;
   left: 1.9em;
-}
+} */
 
 @media screen and (min-width: 768px) {
   .main {

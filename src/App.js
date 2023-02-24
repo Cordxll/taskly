@@ -11,7 +11,10 @@ import "./App.css";
 import EditGoalForm from "./components/goals/actions/EditGoalForm";
 import Navigation from "./components/layout/Navigation";
 import DesktopNav from "./components/layout/DesktopNav";
+import Goals from "./components/goals/Goals";
+import TasksPage from "./components/tasks/TasksPage";
 import classes from "./components/layout/Layout.module.css";
+import EditTaskForm from "./components/tasks/EditTaskForm";
 
 function App() {
   const [isDesktop, setDesktop] = useState(window.innerWidth > 768);
@@ -38,14 +41,21 @@ function App() {
           <Routes>
             <Route exact path="/" element={<HomePublic />} />
             <Route exact path="/Layout" element={<Layout />} />
+            <Route exact path="/Goals" element={<Goals />} />
+            <Route exact path="/Tasks" element={<TasksPage />} />
             <Route exact path="/Edit" element={<EditCard />} />
             <Route exact path="/Login" element={<Login />} />
             <Route exact path="/Register" element={<Register />} />
             <Route exact path="/Cal" element={<CalendarAndTasks />} />
             <Route
               exact
-              path="/Layout/EditModal/:id"
+              path="/Goals/EditModal/:id"
               element={<EditGoalForm />}
+            />
+            <Route
+              exact
+              path="/Tasks/EditModal/:id"
+              element={<EditTaskForm />}
             />
           </Routes>
         </Router>

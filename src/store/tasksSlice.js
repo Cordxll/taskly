@@ -33,7 +33,7 @@ const tasksSlice = createSlice({
       if (existingItem) {
         existingItem.title = newItem.title;
         existingItem.description = newItem.description;
-        existingItem.timeline = newItem.timeline;
+        existingItem.time = new Date(newItem.time);
         existingItem.completed = newItem.completed;
         existingItem.user = newItem.user;
       }
@@ -45,7 +45,7 @@ const tasksSlice = createSlice({
         id: newItem.id,
         title: newItem.title,
         description: newItem.description,
-        time: newItem.timeline,
+        time: new Date(newItem.time),
         completed: newItem.completed,
         goal: newItem.goal,
       });

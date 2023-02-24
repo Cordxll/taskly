@@ -33,7 +33,7 @@ export const fetchGoalsData = () => {
 };
 
 export const sendGoalsData = (goal) => {
-  return async () => {
+  return async (dispatch) => {
     const sendRequest = async () => {
       const response = await fetch(`${Api}/goals/update/${goal.id}`, {
         method: "PUT",

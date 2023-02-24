@@ -7,13 +7,10 @@ import classes from "./GoalItem.module.css";
 import MoreButton from "./MoreButton";
 import TimeClock from "../pics/time.svg";
 import { editActions } from "../../store/editSlice";
-import EditGoalForm from "./actions/EditGoalForm";
 import { useNavigate } from "react-router-dom";
 
 const GoalItem = (props) => {
   const dispatch = useDispatch();
-
-  const editForm = useSelector((state) => state.edit);
 
   const goals = useSelector((store) => store.goals.goalList);
 
@@ -25,18 +22,12 @@ const GoalItem = (props) => {
     existingItem[0];
 
   const navigate = useNavigate();
-
-  const toggleEditFormHandler = () => {
-    dispatch(editActions.toggle());
-  };
-
   const showTasks = useSelector((state) => state.ui.taskIsVisible);
 
   const toggleGoalHandler = () => {
     dispatch(uiActions.toggle());
   };
 
-  // const buttonBorder = ReactDOMServer.renderToString(color.backgroundColor);
   const buttonStyle = {
     border: `0.1em solid ${color} `,
   };
@@ -52,8 +43,11 @@ const GoalItem = (props) => {
           <span className={classes.headerText}>{title}</span>
           <MoreButton
             className={classes.moreBtn}
-            onClick={() => navigate(`/Layout/EditModal/${id}`)}
-            title="Update goal"
+            onClick={() => {
+              navigate(`/Goals/EditModal/${id}`);
+              dispatch(editActions.setTitle("Update goal"));
+            }}
+            // title="Update goal"
             goal={props}
             key={id}
           />
@@ -109,7 +103,7 @@ const GoalItem = (props) => {
         </div>
       )}
 
-      {editForm.editFormIsVisible && (
+      {/* {editForm.editFormIsVisible && (
         <div className={classes.modal}>
           <EditGoalForm
             onClose={toggleEditFormHandler}
@@ -118,7 +112,7 @@ const GoalItem = (props) => {
             key={id}
           />
         </div>
-      )}
+      )} */}
     </>
   );
 };

@@ -2,8 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const editSlice = createSlice({
   name: "edit",
-  initialState: { title: "Update goal", editFormIsVisible: false },
+  initialState: { title: "", editFormIsVisible: false },
   reducers: {
+    setTitle(state, action) {
+      state.title = action.payload;
+    },
     toggle(state, action) {
       state.editFormIsVisible = !state.editFormIsVisible;
     },
