@@ -1,44 +1,23 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import AuthContext from "../context/AuthContext";
-import classes from "./Registration.module.css"
-import { MdOutlineError } from 'react-icons/md'
+import classes from "./Registration.module.css";
+import { MdOutlineError } from 'react-icons/md';
+import { useDispatch } from "react-redux";
+import {register} from "../../store/user-actions.js";
 
 function Register() {
 
     let [username, setUsername] = useState("");
     let [password, setPassword] = useState("");
-    let [isMatching, setIsMatching] = useState(false);
+    let [isMatching, setIsMatching] = useState(true);
     let [email, setEmail] = useState("");
 
-    const auth = useContext(AuthContext);
+    const dispatch = useDispatch();
 
-    async function handleSubmit(event) {
+    function handleSubmit(event) {
         event.preventDefault();
 
-        const request = {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                username,
-                password,
-                email
-            })
-        }
-
-        const response = await fetch("http://localhost:8080/user/register", request);
-
-        if(response.ok) {
-            const { token } = await response.json();
-            auth.login(token);
-            
-        } else {
-            const report = await response.json();
-            console.log(report);
-        }
-
+        dispatch(register(username, password, email));
     }
 
     function handleChange(event) {

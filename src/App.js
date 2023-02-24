@@ -5,8 +5,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import EditCard from "./components/goals/actions/EditCard";
 import Login from "./components/login/Login";
 import Register from "./components/registration/Register";
-import jwtDecode from "jwt-decode";
-import AuthContext from "./components/context/AuthContext";
 import CalendarAndTasks from "./components/calendar/CalendarAndTasks";
 import HomePublic from "./components/home/HomePublic";
 import "./App.css";
@@ -15,50 +13,7 @@ import Navigation from "./components/layout/Navigation";
 import DesktopNav from "./components/layout/DesktopNav";
 import classes from "./components/layout/Layout.module.css";
 
-const LOCAL_STORAGE_TOKEN_KEY = "productivePeopleToken";
-
-const unregisteredUser = {
-  username: "",
-  email: "",
-  userId: "",
-  token: "",
-};
-
 function App() {
-  const [user, setUser] = useState(unregisteredUser);
-
-  const login = async (token) => {
-    const userInfo = { ...user };
-
-    localStorage.setItem(LOCAL_STORAGE_TOKEN_KEY, token);
-    const { sub: username } = jwtDecode(token);
-
-    const response = await fetch(`http://localhost:8080/user/${username}`);
-
-    const body = await response.json();
-
-    console.log(body.id);
-    console.log(body.email);
-
-    userInfo.username = username;
-    userInfo.userId = body.id;
-    userInfo.email = body.email;
-    userInfo.token = token;
-
-    setUser(userInfo);
-    console.log(userInfo);
-  };
-
-  const logout = () => {
-    setUser(unregisteredUser);
-    localStorage.removeItem(LOCAL_STORAGE_TOKEN_KEY);
-  };
-
-  const auth = {
-    login,
-    logout,
-    user,
-  };
   const [isDesktop, setDesktop] = useState(window.innerWidth > 768);
 
   const updateMedia = () => {
@@ -71,7 +26,6 @@ function App() {
   });
 
   return (
-    <AuthContext.Provider value={auth}>
       <Fragment>
         <Router>
           {isDesktop ? (
@@ -96,7 +50,6 @@ function App() {
           </Routes>
         </Router>
       </Fragment>
-    </AuthContext.Provider>
   );
 }
 

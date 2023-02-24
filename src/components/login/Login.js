@@ -1,7 +1,8 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import AuthContext from "../context/AuthContext";
 import classes from "./Login.module.css"
+import {login} from "../../store/user-actions.js"
+import { useDispatch, useSelector } from "react-redux";
 
 function Login() {
 
@@ -9,29 +10,14 @@ function Login() {
     let [password, setPassword] = useState("");
     let [error, setError] = useState([]);
 
-    const auth = useContext(AuthContext);
+    const dispatch = useDispatch();
+    const user = useSelector((state) => state.auth.user)
 
-    async function handleSubmit(event) {
+    function handleSubmit(event) {
         event.preventDefault();
 
-        const request = {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({
-                username: username,
-                password: password
-            })
-        }
-
-        const response = await fetch("http://localhost:8080/user/login/authenticate", request);
-
-        if(response.ok) {
-            const { token } = await response.json();
-            auth.login(token);
-        } else {
-            console.log(response);
-        }
-
+        dispatch(login(username, password));
+        console.log(user);
     }
 
     function handleChange(event) {

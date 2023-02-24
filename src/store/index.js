@@ -15,7 +15,7 @@ const store = configureStore({
     goals: goalsSlice.reducer,
     tasks: tasksSlice.reducer,
     selectedDate: dateSlice.reducer,
-    user: userSlice.reducer,
+    auth: userSlice.reducer,
   },
 });
 
