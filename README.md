@@ -1,4 +1,4 @@
-Link: http://productivity-webapp.s3-website-us-east-1.amazonaws.com/
+Link: https://taskly.pages.dev/
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
