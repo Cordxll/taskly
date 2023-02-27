@@ -9,7 +9,6 @@ export default function Profile(){
     console.log(user.username)
     return(
         <div className={classes.container}>
-                
                 <div className={classes.imgContainer}>
                     <img  className={classes.img} src={DefaultPic}/>
                     <div className={classes.buttonWrapper}>

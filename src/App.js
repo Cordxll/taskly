@@ -15,6 +15,7 @@ import Goals from "./components/goals/Goals";
 import TasksPage from "./components/tasks/TasksPage";
 import classes from "./components/layout/Layout.module.css";
 import EditTaskForm from "./components/tasks/EditTaskForm";
+import Profile from "./components/profile/Profile";
 
 function App() {
   const [isDesktop, setDesktop] = useState(window.innerWidth > 768);
@@ -47,6 +48,7 @@ function App() {
             <Route exact path="/Login" element={<Login />} />
             <Route exact path="/Register" element={<Register />} />
             <Route exact path="/Cal" element={<CalendarAndTasks />} />
+            <Route exact path="/profile" element={<Profile/>}/>
             <Route
               exact
               path="/Goals/EditModal/:id"
