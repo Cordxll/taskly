@@ -19,7 +19,7 @@ export default function Tasks({task}){
                   ))}
               </div>
               <div className={classes.header}>{task.name}</div>
-              <time className={classes.time} dateTime={task.endDatetime}>Day {format(endDateTime, 'h:mm aa')}</time>
+              <time className={classes.time} dateTime={task.endDatetime}>{format(endDateTime, 'eeee h:mm aa')}</time>
           </div>
             <button className={classes.btn}>
               <img src='https://cdn1.iconfinder.com/data/icons/small-v17/100/menu_options_points_select_selection_three-512.png' width={40}/>

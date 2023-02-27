@@ -1,9 +1,7 @@
 import { Fragment } from "react";
 import classes from "./DesktopNav.module.css";
-import Calendar from "../pics/calendar.svg";
-import Profile from "../pics/profile.svg";
-import Stats from "../pics/stats.svg";
-import { useDispatch } from "react-redux";
+import logo from "../../assets/taskly-high-resolution-logo-color-on-transparent-background.png"
+import { useDispatch,useSelector } from "react-redux";
 import { addActions } from "../../store/addSlice";
 
 //https://react-icons.github.io/react-icons to search for icons 
@@ -14,46 +12,76 @@ import {TbLogout} from 'react-icons/tb'
 import { Link } from "react-router-dom";
 
 const DesktopNav = () => {
+  const user = useSelector((state) => state.auth.user)
   const dispatch = useDispatch();
   const toggleSaveFormHandler = () => {
     console.log("hey");
     dispatch(addActions.toggle());
   };
-  return (
-    <Fragment>
-      <div className={classes.navigation}>
-        <div style={{height:'100%',}}>
-          <div className={classes.subcontainer}>
-            <button className={`${classes.plus} ${classes.link}`} onClick={toggleSaveFormHandler}>
-              New Event
-            </button>
-          </div>
-          
-          <div className={classes.subcontainer}>
-            <Link to="/layout" className={classes.link}>
+  
+  function HomeCalendarStats(){
+    return(
+        <div className={classes.subcontainer}>
+            <Link to="/Layout" className={classes.link}>
               <BiHome className={classes.icon}/>
-              <p>Home</p>
+              <p>Layout</p>
             </Link>
             <Link to="/cal" className={classes.link}>
               <BiCalendarCheck className={classes.icon}/>
-              <p>Calendar</p>
+              <p>Calendat</p>
             </Link>
             <Link to="/statistics" className={classes.link}>
               <VscGraph className={classes.icon}/>
               <p>Statistics</p>
             </Link>
+        </div>
+    )
+  }
+
+  function LoginRegister(){
+    return(
+      <div className={classes.subcontainer}>
+            <Link to="/login" className={classes.link}>
+              Sign In
+            </Link>
+            <Link to="/register" className={classes.link}>
+              Register
+            </Link>
+            <div></div>
           </div>
+    )
+  }
+  
+  function Footer(){
+    return(
+      <>
+        <Link to="/profile" className={classes.link}>
+          <MdPersonOutline className={classes.icon} />
+          <p>Profile</p>
+        </Link>
+        <button className={classes.link}>
+          <MdOutlineLogout className={classes.icon} />
+          <p>Logout</p>
+        </button>
+      </>
+    )
+  }
+
+
+  return (
+    <Fragment>
+      <div className={classes.navigation}>
+        <div style={{height:'100%',}}>
+          <div className={classes.subcontainer}>
+            <Link to="/" className={classes.link}>
+              <img src={logo} style={{width:'100%'}}/>
+            </Link>
+          </div>
+          {user.username ? HomeCalendarStats():LoginRegister()}
         </div>
 
         <div className={`${classes.subcontainer} ${classes.last}`}>
-          <Link to="/profile" className={classes.link}>
-            <MdPersonOutline className={classes.icon}/>
-            <p>Profile</p>
-          </Link>
-          <button className={classes.link}>
-            <MdOutlineLogout className={classes.icon}/>
-            <p>Logout</p>
-          </button>
+          {user.username ? Footer() : ""}
         </div>
       </div>
     </Fragment>

@@ -13,13 +13,10 @@ export default function Cal({tasks}){
     const newDays =  eachDayOfInterval({start:startOfWeek(firstDayCurrentMonth), end:endOfWeek(endOfMonth(firstDayCurrentMonth))});
     const dispatch = useDispatch();
 
-    console.log(selected);
- 
     const style = (input) => {
         if(!isSameMonth(input,firstDayCurrentMonth)){
             return classes.isntSameMonth
-        }
-        else if(isToday(input) && isEqual(selected,input)){
+        } else if(isToday(input) && isEqual(selected,input)){
             return classes.isTodaySelected
 
         }else if(isToday(input) && !isEqual(selected,input)){
@@ -31,7 +28,7 @@ export default function Cal({tasks}){
         }else{
             return classes.isDefault
         }
-    };
+    }
 
     function nextMonth(){
         let firstDayNextMonth = add(firstDayCurrentMonth, {months : 1});
@@ -41,38 +38,65 @@ export default function Cal({tasks}){
         let firstDayNextMonth = add(firstDayCurrentMonth, {months : -1});
         setCurrentMonth(format(firstDayNextMonth, 'MMM-yyyy'))
     };
+    
+    function DesktopHeader(){
+        return(
+            <div className={classes.desktopHeader}>
+                {format(firstDayCurrentMonth, 'MMM yyyy')}
+
+                <div className={classes.btns}>
+                    <button className={classes.allUnset} onClick={() => prevMonth()}>
+                        <FaArrowAltCircleLeft className={classes.colorWhite} size={24}/>
+                    </button>  
+                    <button className={classes.allUnset} onClick={() => nextMonth()}>
+                        <FaArrowAltCircleRight className={classes.colorWhite} size={24}/>
+                    </button>
+                    <div className={classes.search}></div>
+                </div>
+            </div>
+        )
+    };
+
+    function MobileHeader(){
+        return(
+            <div className={classes.header}>              
+                <button className={classes.allUnset} onClick={() => prevMonth()}>
+                    <FaArrowAltCircleLeft className={classes.colorWhite} size={24}/>
+                </button>   
+                {format(firstDayCurrentMonth, 'MMM yyyy')}
+                <button className={classes.allUnset} onClick={() => nextMonth()}>
+                    <FaArrowAltCircleRight className={classes.colorWhite} size={24}/>
+                </button>
+            </div>
+        )
+    }
 
     return(
             <div className={classes.container}>
                 <div className={classes.containerChild}>
-                    <div className={classes.header}>              
-                        <button className={classes.allUnset} onClick={() => prevMonth()}>
-                            <FaArrowAltCircleLeft className={classes.colorWhite} size={24}/>
-                        </button>
-                            
-                        {format(firstDayCurrentMonth, 'MMM yyyy')}
-                        <button className={classes.allUnset} onClick={() => nextMonth()}>
-                            <FaArrowAltCircleRight className={classes.colorWhite} size={24}/>
-                        </button>
-                    </div>
-
+                    {DesktopHeader()}
                     <div className={classes.gridHeader}>
                         {["S","M","T","W","Th","F","Sa"].map(x => (<div >{x}</div>))}
                     </div>
                     <div className={classes.gridHeaderSm}>
-                        {["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"].map(x => (<div >{x}</div>))}
+                        {["Sun","Mon","Tue","Wed","Thur","Fri","Sat"].map(x => (<div>{x}</div>))}
                     </div>
                     <div className={classes.calendarGrid}>
                         {
                         newDays.map(
                             x => (
                             <button className={classes.calendarDate} onClick={()=> {dispatch(updateDate(format(x,'yyyy-MM-dd')))}}>
-                            <time dateTime={format(x, 'yyyy-MM-dd')} style={{}}>
-                                <div className={style(x)}>
-                                    {format(x, 'd')}
-                                    {tasks.some(meeting =>isSameDay(parseISO(meeting.startDatetime), x)) && (<div style={{position:"absolute",bottom:"0px",left:"0px",right:"0px",fontSize:"8px"}}>😊</div>)}
-                                </div> 
-                            </time>
+                                <time dateTime={format(x, 'yyyy-MM-dd')} style={{height:"100%"}}>
+                                    <div className={style(x)}>
+                                        <p>{format(x,'d')}</p>
+                                        {tasks.filter(y => isSameDay(parseISO(y.startDatetime),x)).map(z => 
+                                            (
+                                            <div className={classes.task}>
+                                                <p>{z.name}</p>
+                                            </div>)
+                                            ) }
+                                    </div>
+                                </time>
                             </button>
                             ))
                         }

@@ -4,6 +4,9 @@
   justify-content: center;
   text-align: center;
 }
+.container button:hover{
+  cursor: pointer;
+}
 .containerChild {
   width: 90%;
   padding-top: 5%;
@@ -15,6 +18,10 @@
 
 .colorWhite {
   color: white;
+}
+
+.colorWhite:hover{
+  color: rgb(203 213 225);
 }
 
 .header {
@@ -40,6 +47,8 @@
 
 .calendarGrid {
   display: grid;
+  height: auto;
+  grid-auto-rows: 1fr;
   grid-template-columns: repeat(7, minmax(0, 1fr));
   padding-bottom: 14px;
 }
@@ -48,96 +57,161 @@
   cursor: pointer;
 }
 
-.isntSameMonth {
-  color: rgb(162, 161, 161);
-  text-align: center;
-  padding-top: 30%;
-  padding-bottom: 30%;
-  border-radius: 100px;
-  font-weight: 600;
-  position: relative;
+.desktopHeader{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: rgb(100 116 139);
+  border: 1.5px solid rgb(203 213 225);
+  padding: 15px;
+  border-radius: 10px 10px 0px 0px;
 }
 
-.isTodaySelected {
-  color: pink;
-  background-color: black;
-  text-align: center;
-  padding-top: 30%;
-  padding-bottom: 30%;
-  border-radius: 100px;
-  font-weight: 600;
-  position: relative;
+.isDefault{
+  height: 100%;
+}
+.isDefault p{
+  color: rgb(100 116 139);
+  margin-block-start: 0em;
+  margin-block-end: 0.25em;
+  padding-block-start: 0.25em;
+  padding-left: 0.25em;
+  scroll-padding-block-start: 1;
 }
 
-.isTodayUnselected {
-  color: pink;
-  text-align: center;
-  padding-top: 30%;
-  padding-bottom: 30%;
-  border-radius: 100px;
-  font-weight: 600;
-  position: relative;
+.isntSameMonth{
+  height: 100%;
+  background-color: rgb(241 245 249);
+}
+.isntSameMonth p{
+  color: rgb(100 116 139);
+  margin-block-start: 0em;
+  margin-block-end: 0.25em;
+  padding-block-start: 0.25em;
+  padding-left: 0.25em;
+  scroll-padding-block-start: 1;
 }
 
-.isSelected {
+.isTodaySelected{
+  height: 100%;
+}
+.isTodaySelected p{
+  color: cornflowerblue;
+  font-weight: 600;
+  text-decoration: underline;
+  margin-block-start: 0em;
+  margin-block-end: 0.25em;
+  padding-block-start: 0.25em;
+  padding-left: 0.25em;
+  scroll-padding-block-start: 1;
+}
+.isTodayUnselected{
+  height: 100%;
+}
+.isTodayUnselected p{
+  color: rgb(100 116 139);
+  text-decoration: underline;
+  font-weight: 600;
+  margin-block-start: 0em;
+  margin-block-end: 0.25em;
+  padding-block-start: 0.25em;
+  padding-left: 0.25em;
+  scroll-padding-block-start: 1;
+}
+.isSelected{
+  height: 100%;
+}
+.isSelected p{
+  color: cornflowerblue;
+  margin-block-start: 0em;
+  margin-block-end: 0.25em;
+  padding-block-start: 0.25em;
+  padding-left: 0.25em;
+  scroll-padding-block-start: 1;
+}
+
+.btns{
+  display: flex;
+  gap: 6px;
+}
+.search{
+  padding: 10px;
+  width: 7em;
+  border: 1px solid rgb(100 116 139);
+  margin-left: 10%;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+}
+
+.task{
+  visibility: hidden;
+  padding-left: 5px;
+  padding-right: 5px;
+  white-space: nowrap;
+  margin-bottom: 1%;
+  
+}
+.task p{
+  padding:5px;
   color: white;
-  background-color: black;
-  text-align: center;
-  padding-top: 30%;
-  padding-bottom: 30%;
-  border-radius: 100px;
-  font-weight: 600;
-  position: relative;
+  font-size:x-small;
+  background-color: cornflowerblue;
+  border-radius: 9999px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.isDefault {
-  color: black;
-  text-align: center;
-  padding-top: 30%;
-  padding-bottom: 30%;
-  border-radius: 9999px;
-  font-weight: 600;
-  position: relative;
-}
 
 @media screen and (min-width: 640px) {
   .container {
     width: 100%;
   }
+
+  .colorWhite {
+    color: rgb(148 163 184);
+  }
+
+  .task{
+    visibility: visible;
+  }
 }
 
 @media screen and (min-width: 1000px) {
   .calendarDate {
-    border: 0.5px solid lightgray;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    overflow: hidden;
+    
   }
+  .calendarGrid{
+    background-color: rgb(203 213 225);
+    height: 75vh;
+    grid-gap: 1px;
+    padding: 1.5px;
+  }
+  
   .gridHeader {
     display: none;
   }
   .gridHeaderSm {
     display: grid;
     grid-template-columns: repeat(7, minmax(0, 1fr));
-    padding: 14px;
+    grid-gap: 1px;
     font-weight: 600;
     color: gray;
+    padding: 1.5px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    background-color: rgb(203 213 225);
   }
-  .isSelected {
-    color: red;
+  .gridHeaderSm div{
     background-color: white;
-    text-align: center;
-    padding-top: 30%;
-    padding-bottom: 30%;
-    font-weight: 600;
-    position: relative;
-  }
-
-  .isTodaySelected {
-    color: rgb(255, 85, 113);
-    text-align: center;
-    background-color: white;
-    padding-top: 30%;
-    padding-bottom: 30%;
-    border-radius: 100px;
-    font-weight: 600;
-    position: relative;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 5px;
+    text-align: left;
+    font-size:x-small;
   }
 }
