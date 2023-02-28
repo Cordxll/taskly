@@ -3,21 +3,35 @@ import { Link } from "react-router-dom";
 import classes from "./Login.module.css"
 import {login} from "../../store/user-actions.js"
 import { useDispatch, useSelector } from "react-redux";
+import { MdOutlineError } from 'react-icons/md';
+import { useNavigate } from "react-router-dom";
+
 
 function Login() {
 
+    const navigate = useNavigate();
+
     let [username, setUsername] = useState("");
     let [password, setPassword] = useState("");
-    let [error, setError] = useState([]);
+    let [loginError, setLoginError] = useState("");
+    
+    const errorList = useSelector((state) => state.auth.errorList);
+    const user = useSelector((state) => state.auth.user)
 
     const dispatch = useDispatch();
-    const user = useSelector((state) => state.auth.user)
 
     function handleSubmit(event) {
         event.preventDefault();
 
         dispatch(login(username, password));
-        console.log(user);
+        
+        if (errorList.length > 0) {
+            setLoginError(errorList[0]);
+        }
+        
+        if(user.token) {
+            navigate("/Goals");
+        }
     }
 
     function handleChange(event) {
@@ -44,10 +58,12 @@ function Login() {
                             <label>Password</label>
                             <input type="password" name="password" onChange={handleChange}></input>
                         </div>
-                        <div>
+                        <div className={loginError ? classes.error : ""}>
+                            {loginError && <p><MdOutlineError />{loginError}</p>}
                             <button type="submit">Login</button>
-                            <p>Don't have an account? <Link to="/register" style={{color:"blue"}}>Click Here</Link></p>
+                            
                         </div>
+                        <p>Don't have an account? <Link to="/register" style={{color:"blue"}}>Click Here</Link></p>
                     </div>
                 </form>
             </div>

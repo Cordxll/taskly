@@ -3,10 +3,11 @@ import { createSlice } from "@reduxjs/toolkit";
 const userSlice = createSlice({
     name: "auth",
     initialState: {
-        user: {}
+        user: {},
+        errorList: []
     },
     reducers: {
-        setUser(state, action) {
+        loginUser(state, action) {
             const user = action.payload;
          
             state.user.username = user.username;
@@ -17,6 +18,17 @@ const userSlice = createSlice({
 
         logoutUser(state) {
             state.user = null;
+        },
+
+        logError(state, action) {
+
+            let error = action.payload;
+
+            state.errorList.push(error);
+        },
+
+        clearError(state) {
+            state.errorList = [];
         }
     },
 });

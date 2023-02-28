@@ -22,8 +22,10 @@ export const login = (username, password) => {
                 const { token } = await response.json();
                 dispatch(setUser(token));
             } else {
+                dispatch(userActions.clearError());
                 const report = await response.json();
-                console.log(report);
+        
+                dispatch(userActions.logError("Incorrect username or password"));
             }
         }
 
@@ -57,8 +59,11 @@ export const register = (username, password, email) => {
                 const { token } = await response.json();
                 dispatch(setUser(token));
             } else {
+                dispatch(userActions.clearError());
                 const report = await response.json();
-                console.log(report);
+                for (let i = 0; i < report.length; i++) {
+                    dispatch(userActions.logError(report[i]));
+                }
             }
         }
 
@@ -67,11 +72,7 @@ export const register = (username, password, email) => {
         } catch (error) {
             console.log(error);
         }
-
-
     }
-
-
 }
 
 export function logout(dispatch) {
@@ -107,6 +108,6 @@ function setUser(token) {
 
         console.log(token, username);
 
-        dispatch(userActions.setUser(userInfo));
+        dispatch(userActions.loginUser(userInfo));
     }
 };
