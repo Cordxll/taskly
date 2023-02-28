@@ -13,17 +13,6 @@ const tasksSlice = createSlice({
     changeStatus(state) {
       state.changed = false;
     },
-    // changeColor(state, action) {
-    //   state.changed = true;
-    //   const newItem = action.payload;
-    //   const existingItem = state.goalList.find(
-    //     (item) => item.id === newItem.id
-    //   );
-
-    //   if (existingItem) {
-    //     existingItem.color = newItem.color;
-    //   }
-    // },
     changeInputs(state, action) {
       state.changed = true;
       const newItem = action.payload;
@@ -33,9 +22,12 @@ const tasksSlice = createSlice({
       if (existingItem) {
         existingItem.title = newItem.title;
         existingItem.description = newItem.description;
-        existingItem.time = new Date(newItem.time);
+        existingItem.time = newItem.time;
+        existingItem.day = newItem.day;
         existingItem.completed = newItem.completed;
+        existingItem.duration = newItem.duration;
         existingItem.user = newItem.user;
+        existingItem.goal = newItem.goal;
       }
     },
     addTask(state, action) {
@@ -45,9 +37,12 @@ const tasksSlice = createSlice({
         id: newItem.id,
         title: newItem.title,
         description: newItem.description,
-        time: new Date(newItem.time),
-        completed: newItem.completed,
+        time: newItem.time,
+        day: newItem.day,
+        duration: newItem.duration,
+        completed: false,
         goal: newItem.goal,
+        user: newItem.user,
       });
     },
     deleteTask: (state, action) => {

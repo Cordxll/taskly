@@ -102,3 +102,32 @@ export const deleteGoal = (goal) => {
     }
   };
 };
+
+export const fetchTasksForGoal = (goal) => {
+  return async (dispatch) => {
+    const fetchData = async () => {
+      const init = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        // mode: "no-cors",
+      };
+      const response = await fetch(`${Api}/task/${goal.id}`, init);
+
+      if (!response.ok) {
+        throw new Error("Could not fetch task data!");
+      }
+
+      const data = await response.json();
+
+      return data;
+    };
+
+    try {
+      await fetchData();
+    } catch (error) {
+      console.log("error");
+    }
+  };
+};

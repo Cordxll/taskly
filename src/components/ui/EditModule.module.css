@@ -31,7 +31,8 @@
   font-weight: 600;
 }
 
-.textInput input {
+.textInput input,
+select {
   margin: 1rem 0;
   padding: 1rem;
   width: 100%;
@@ -40,6 +41,10 @@
   border-radius: 9px;
   border: none;
   background-color: rgb(231, 228, 228, 0.5);
+}
+.textInput select {
+  height: 50px;
+  font-size: 1rem;
 }
 
 .container header {
@@ -110,8 +115,8 @@
   font-size: 1rem;
   border-radius: 9px;
 }
-.durationButtons button:hover,
-.durationButtons button:active {
+
+.active {
   background-color: rgb(217, 174, 174);
 }
 

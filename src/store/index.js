@@ -17,6 +17,17 @@ const store = configureStore({
     selectedDate: dateSlice.reducer,
     auth: userSlice.reducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        // Ignore these action types
+        ignoredActions: ["your/action/type"],
+        // Ignore these field paths in all actions
+        ignoredActionPaths: ["meta.arg", "payload.time"],
+        // Ignore these paths in the state
+        ignoredPaths: ["tasks.taskList.time"],
+      },
+    }),
 });
 
 export default store;

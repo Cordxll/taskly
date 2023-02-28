@@ -11,8 +11,7 @@ import AddTaskForm from "../tasks/AddTaskForm";
 import EditTaskForm from "../tasks/EditTaskForm";
 import Layout from "../layout/Layout";
 import { format, parseISO, isSameDay } from "date-fns";
-import Back from "../pics/back.svg";
-import Forward from "../pics/forward.svg";
+import DateViewer from "../calendar/WeekCalendar";
 
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 
@@ -28,8 +27,9 @@ const TasksPage = (props) => {
   const selected = parseISO(useSelector((state) => state.selectedDate.value));
 
   let selectedDayTasks = tasks?.filter((task) =>
-    isSameDay(parseISO(task.startDatetime), selected)
+    isSameDay(parseISO(task.day), selected)
   );
+  // console.log(selectedDayTasks);
 
   useEffect(() => {
     dispatch(fetchTasksData());
@@ -57,29 +57,16 @@ const TasksPage = (props) => {
   return (
     <Fragment>
       <Layout />
+      <DateViewer />
+
       <div className={classes.container}>
         <div className={classes.containerChild}>
-          <div className={classes.nav}>
-            {/* {format(selected, "MMMM dd yyyy")} */}
-            <button className={classes.navItem}>
-              {/* <img src={Back} alt="back arrow" /> */}
-              <AiOutlineArrowLeft />
-            </button>
-            <button className={classes.navToday}>today</button>
-            <button className={classes.navItem}>
-              {/* <img scr={Forward} alt="forward arrow" />
-               */}
-              <AiOutlineArrowRight />
-            </button>
-          </div>
-          {/* <span className={classes.whatsHappening}>What's Happening ...</span> */}
-          {tasks.map((item) => (
-            // <div key={item.id}>
-            <TaskItem key={item.id} item={item} />
-            // </div>
-          ))}
+          {selectedDayTasks.map(
+            (item) => !item.completed && <TaskItem key={item.id} item={item} />
+          )}
         </div>
       </div>
+
       <AddButton
         onClick={() => {
           toggleSaveFormHandler();

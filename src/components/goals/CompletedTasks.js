@@ -6,10 +6,10 @@ const CompletedTasks = (props) => {
   return (
     <Fragment>
       <div className={classes.task}>
-        <div>{props.title}</div>
+        <div>{props.item.title}</div>
         <div className={classes.time}>
           <img className={classes.timeClock} src={TimeClock} alt="time clock" />
-          <div className={classes.goalTime}>{props.date}</div>
+          <div className={classes.goalTime}>{props.item.day}</div>
         </div>
       </div>
     </Fragment>

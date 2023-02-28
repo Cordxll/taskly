@@ -32,6 +32,10 @@ const GoalItem = (props) => {
     border: `0.1em solid ${color} `,
   };
 
+  const tasks = useSelector((state) => state.tasks.taskList);
+  const goalTasks = tasks.filter((item) => item.goal?.title === title);
+  // console.log(goalTasks);
+
   return (
     <>
       <Card>
@@ -95,11 +99,14 @@ const GoalItem = (props) => {
 
       {showTasks && (
         <div>
-          <CompletedTasks
-            className={classes.items}
-            title={"Eat healthy"}
-            date={"01/10/2023"}
-          />
+          {goalTasks.map((item) => (
+            <CompletedTasks
+              className={classes.items}
+              item={item}
+              title={"Eat healthy"}
+              date={"01/10/2023"}
+            />
+          ))}
         </div>
       )}
 
