@@ -89,10 +89,10 @@ export default function Cal({tasks}){
                                 <time dateTime={format(x, 'yyyy-MM-dd')} style={{height:"100%"}}>
                                     <div className={style(x)}>
                                         <p>{format(x,'d')}</p>
-                                        {tasks.filter(y => isSameDay(parseISO(y.startDatetime),x)).map(z => 
+                                        {tasks.filter(y => isSameDay(parseISO(y.day),x)).map(z => 
                                             (
                                             <div className={classes.task}>
-                                                <p>{z.name}</p>
+                                                <p>{z.title}</p>
                                             </div>)
                                             ) }
                                     </div>
