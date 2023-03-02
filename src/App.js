@@ -16,6 +16,7 @@ import TasksPage from "./components/tasks/TasksPage";
 import classes from "./components/layout/Layout.module.css";
 import EditTaskForm from "./components/tasks/EditTaskForm";
 import Profile from "./components/profile/Profile";
+import Stats from "./components/stats/Stats";
 
 function App() {
   const [isDesktop, setDesktop] = useState(window.innerWidth > 768);
@@ -30,38 +31,31 @@ function App() {
   });
 
   return (
-      <Fragment>
-        <Router>
-          {isDesktop ? (
-            <DesktopNav />
-          ) : (
-            <div className={classes.navbar}>
-              <Navigation />
-            </div>
-          )}
-          <Routes>
-            <Route exact path="/" element={<HomePublic />} />
-            <Route exact path="/Layout" element={<Layout />} />
-            <Route exact path="/Goals" element={<Goals />} />
-            <Route exact path="/Tasks" element={<TasksPage />} />
-            <Route exact path="/Edit" element={<EditCard />} />
-            <Route exact path="/Login" element={<Login />} />
-            <Route exact path="/Register" element={<Register />} />
-            <Route exact path="/Cal" element={<CalendarAndTasks />} />
-            <Route exact path="/profile" element={<Profile/>}/>
-            <Route
-              exact
-              path="/Goals/EditModal/:id"
-              element={<EditGoalForm />}
-            />
-            <Route
-              exact
-              path="/Tasks/EditModal/:id"
-              element={<EditTaskForm />}
-            />
-          </Routes>
-        </Router>
-      </Fragment>
+    <Fragment>
+      <Router>
+        {isDesktop ? (
+          <DesktopNav />
+        ) : (
+          <div className={classes.navbar}>
+            <Navigation />
+          </div>
+        )}
+        <Routes>
+          <Route exact path="/" element={<HomePublic />} />
+          <Route exact path="/Layout" element={<Layout />} />
+          <Route exact path="/Goals" element={<Goals />} />
+          <Route exact path="/Tasks" element={<TasksPage />} />
+          <Route exact path="/Edit" element={<EditCard />} />
+          <Route exact path="/Login" element={<Login />} />
+          <Route exact path="/Register" element={<Register />} />
+          <Route exact path="/Cal" element={<CalendarAndTasks />} />
+          <Route exact path="/profile" element={<Profile />} />
+          <Route exact path="/Stats" element={<Stats />} />
+          <Route exact path="/Goals/EditModal/:id" element={<EditGoalForm />} />
+          <Route exact path="/Tasks/EditModal/:id" element={<EditTaskForm />} />
+        </Routes>
+      </Router>
+    </Fragment>
   );
 }
 
