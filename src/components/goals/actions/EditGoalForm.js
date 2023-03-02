@@ -5,14 +5,17 @@ import EditCard from "./EditCard";
 import ColorPicker from "../ColorPicker";
 import { useSelector, useDispatch } from "react-redux";
 import { goalsActions } from "../../../store/goalsSlice";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { format } from "date-fns";
 import { sendGoalsData } from "../../../store/goals-actions";
 import { deleteGoal } from "../../../store/goals-actions";
-
-const isNotEmpty = (value) => value.trim() !== "";
-let isInitial = true;
+// import {
+//   CircularProgressbar,
+//   CircularProgressbarWithChildren,
+//   buildStyles,
+// } from "react-circular-progressbar";
+// import "react-circular-progressbar/dist/styles.css";
 
 const EditGoalForm = (props) => {
   const dispatch = useDispatch();
@@ -23,7 +26,7 @@ const EditGoalForm = (props) => {
   const navigate = useNavigate();
   const existingItem = goals.filter((user) => user.id === Number(params.id));
 
-  const { id, title, description, timeline, color, completed, user } =
+  const { id, title, description, timeline, color, completed, progress, user } =
     existingItem[0];
 
   const [formHasChanged, setFormHasChanged] = useState(false);
@@ -38,18 +41,8 @@ const EditGoalForm = (props) => {
     completed,
     user,
     color,
+    progress,
   });
-
-  useEffect(() => {
-    if (isInitial) {
-      isInitial = false;
-      return;
-    }
-    if (formHasChanged) {
-      dispatch(sendGoalsData(values));
-      // console.log(goals);
-    }
-  }, [values, dispatch, formHasChanged]);
 
   if (values.title.trim() === "") {
     formIsValid = false;
@@ -60,6 +53,7 @@ const EditGoalForm = (props) => {
   const handleEditItem = (event) => {
     event.preventDefault();
     setFormHasChanged(true);
+    dispatch(sendGoalsData(values));
     dispatch(
       goalsActions.changeInputs({
         id: values.id,
@@ -67,6 +61,7 @@ const EditGoalForm = (props) => {
         description: values.description,
         timeline: values.timeline,
         completed: values.completed,
+        progress: values.progress,
         user: values.user,
       })
     );
@@ -95,6 +90,8 @@ const EditGoalForm = (props) => {
     );
   };
 
+  const [minVal, setMinVal] = useState(0);
+
   return (
     <Modal onClose={() => navigate("/Goals")}>
       <div className={classes.container}>
@@ -119,7 +116,6 @@ const EditGoalForm = (props) => {
                     setFormHasChanged(true);
                   }}
                 />
-
                 <label htmlFor="description">Description</label>
                 <input
                   type="text"
@@ -147,6 +143,24 @@ const EditGoalForm = (props) => {
                     setFormHasChanged(true);
                   }}
                 />
+                <label htmlFor="completion">Completion</label>
+                <div className={classes.slidecontainer}>
+                  <input
+                    type="range"
+                    value={values.progress}
+                    min={0}
+                    max={100}
+                    step={5}
+                    onChange={(e) => {
+                      setValues({
+                        ...values,
+                        progress: +e.target.value,
+                      });
+                      setFormHasChanged(true);
+                    }}
+                  />
+                  <span>{values.progress + "%"}</span>
+                </div>
               </div>
 
               <ColorPicker goal={values} onChange={changeColorHandler} />

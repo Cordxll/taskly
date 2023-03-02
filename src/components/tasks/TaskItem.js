@@ -21,25 +21,24 @@ const TaskItem = (props) => {
   const formatDate = new Date(day + "T" + time);
   const formatEndTime = new Date(day + "T" + time);
 
-  console.log(duration ? duration : 0);
+  const formatedDay = format(formatDate, "MMM d, yyyy");
 
-  // const endTime =
-  //   new Date(formatDate).getMinutes() + Number(duration ? duration : 0);
-  // console.log(endTime);
-  const due = formatEndTime.setMinutes(
-    formatEndTime.getMinutes() + Number(duration ? duration : 0)
-  );
-  console.log(formatEndTime);
-  // .toLocaleString()
-  // .split(",")[1]
-  // .slice(0, 5);
+  let endTime;
+  if (duration === 0 || !duration) {
+    endTime = null;
+  } else {
+    formatEndTime.setMinutes(
+      formatEndTime.getMinutes() + Number(duration ? duration : 0)
+    );
+    endTime =
+      " - " +
+      new Date(formatEndTime).toLocaleString().split(",")[1].slice(0, 5) +
+      new Date(formatEndTime).toLocaleString().split(",")[1].slice(8, 12);
+  }
 
   const startTime =
     new Date(formatDate).toLocaleString().split(",")[1].slice(0, 5) +
     new Date(formatDate).toLocaleString().split(",")[1].slice(8, 12);
-  const endTime =
-    new Date(formatEndTime).toLocaleString().split(",")[1].slice(0, 5) +
-    new Date(formatEndTime).toLocaleString().split(",")[1].slice(8, 12);
 
   return (
     <div className={classes.taskItem}>
@@ -56,12 +55,10 @@ const TaskItem = (props) => {
             )}
           </div>
           <div className={classes.header}>{title}</div>
-          {/* <div className={classes.header}>{description}</div> */}
+          <div className={classes.description}>{description}</div>
 
           {day && startTime && (
-            <div className={classes.time}>
-              {[day, " ", startTime, " - ", endTime]}
-            </div>
+            <div className={classes.time}>{[startTime, endTime]}</div>
           )}
           {day && !startTime && <div className={classes.time}>{day}</div>}
         </div>

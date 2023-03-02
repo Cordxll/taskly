@@ -14,21 +14,29 @@ const Navigation = (props) => {
   // };
 
   const navigate = useNavigate();
-  const homePage = () => {
-    navigate("/HomePage");
-  };
+
   return (
     <Fragment>
       <div className={classes.main}>
         <ul className={classes.button}>
           <li>
-            <button className={classes.homeButton} onClick={homePage}>
+            <button
+              className={classes.homeButton}
+              onClick={() => {
+                navigate("/Goals");
+              }}
+            >
               <img className={classes.icon} src={Home} alt="homepage" />
               {/* <span>Home</span> */}
             </button>
           </li>
           <li>
-            <button className={classes.calendarButton}>
+            <button
+              className={classes.calendarButton}
+              onClick={() => {
+                navigate("/Cal");
+              }}
+            >
               <img className={classes.icon} src={Calendar} alt="calendar" />
               {/* <span>Calendar</span> */}
             </button>
@@ -47,13 +55,23 @@ const Navigation = (props) => {
             </button>
           </li> */}
           <li>
-            <button className={classes.statsButton}>
+            <button
+              className={classes.statsButton}
+              onClick={() => {
+                navigate("/Stats");
+              }}
+            >
               <img className={classes.icon} src={Stats} alt="statistics" />
               {/* <span>Statistics</span> */}
             </button>
           </li>
           <li>
-            <button className={classes.profileButton}>
+            <button
+              className={classes.profileButton}
+              onClick={() => {
+                navigate("/profile");
+              }}
+            >
               <img className={classes.icon} src={Profile} alt="profile" />
               {/* <span>Profile</span> */}
             </button>

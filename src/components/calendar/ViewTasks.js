@@ -8,7 +8,7 @@ export default function ViewTasks({tasks}){
     const selected  = parseISO(useSelector((state) => state.selectedDate.value));
     
     let selectedDayTasks = tasks?.filter((task) =>
-        isSameDay(parseISO(task.startDatetime), selected)
+        isSameDay(parseISO(task.day), selected)
       )
 
     return(
@@ -21,7 +21,7 @@ export default function ViewTasks({tasks}){
                 <Tasks task={task}/>
             ))
           ) : (
-            <h2 className={classes.noTask}>No tasks for today.</h2>
+            <h2 className={classes.noTask}>No tasks for {format(selected,'eeee')}.</h2>
           )}    
             </div>
         </div>

@@ -1,18 +1,18 @@
 import ViewTasks from './ViewTasks'
 import classes from './CalendarAndTask.module.css'
-import { fetchTask } from '../../hooks/fetchTask';
 import Calendar from './Calendar'
+import { useSelector } from 'react-redux';
 
 export default function CalendarAndTask(){
-    const meetings = fetchTask();
+    const tasks = useSelector((state) => state.tasks.taskList);
 
     return(
         <div className={classes.container}>
             <div className={classes.calendar}>
-                <Calendar tasks={meetings} />
+                <Calendar tasks={tasks} />
             </div>
             <div className={classes.task}>
-                <ViewTasks tasks={meetings} />
+                <ViewTasks tasks={tasks} />
             </div>
             
         </div>

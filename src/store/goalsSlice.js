@@ -36,6 +36,7 @@ const goalsSlice = createSlice({
         existingItem.timeline = newItem.timeline;
         existingItem.completed = newItem.completed;
         existingItem.user = newItem.user;
+        existingItem.progress = newItem.progress;
       }
     },
     addGoal(state, action) {
@@ -47,6 +48,7 @@ const goalsSlice = createSlice({
         description: newItem.description,
         timeline: newItem.timeline,
         color: newItem.color,
+        progress: 0,
       });
     },
     deleteGoal: (state, action) => {

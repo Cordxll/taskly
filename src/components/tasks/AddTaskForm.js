@@ -75,7 +75,7 @@ const AddTaskForm = (props) => {
     <Modal onClose={props.onClose}>
       <div className={classes.container}>
         <form onSubmit={submitHandler}>
-          <header className={classes.header}>{props.title}</header>
+          <header className={classes.header}>New Task ToDo</header>
           <div className={classes.control_group}>
             <div className={classes.form}>
               <div className={classes.textInput}>

@@ -1,12 +1,13 @@
 import classes from "./Goals.module.css";
 import GoalItem from "./GoalItem";
-import { Fragment, useEffect } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import AddGoalForm from "./actions/AddGoalForm";
 import EditGoalForm from "./actions/EditGoalForm";
 import { addActions } from "../../store/addSlice";
 import { editActions } from "../../store/editSlice";
 import { fetchGoalsData } from "../../store/goals-actions";
+import { fetchTasksData } from "../../store/tasks-actions";
 import AddButton from "./actions/AddButton";
 import Layout from "../layout/Layout";
 import { goalsActions } from "../../store/goalsSlice";
@@ -14,6 +15,22 @@ import { goalsActions } from "../../store/goalsSlice";
 let initial = true;
 const Goals = (props) => {
   const goals = useSelector((state) => state.goals.goalList);
+
+  const [sortedGoals, setSortedGoals] = useState(goals);
+
+  useEffect(() => {
+    setSortedGoals(
+      goals
+        .filter((item) => !item.completed)
+        .sort((a, b) => {
+          return !a.timeline ? 1 : -1;
+        })
+        .sort((a, b) => {
+          return new Date(a.timeline) > new Date(b.timeline) ? 1 : -1;
+        })
+    );
+  }, [goals]);
+
   const goalChanged = useSelector((state) => state.goals.changed);
 
   const addForm = useSelector((state) => state.add);
@@ -22,6 +39,7 @@ const Goals = (props) => {
 
   useEffect(() => {
     dispatch(fetchGoalsData());
+    dispatch(fetchTasksData());
   }, [dispatch]);
 
   useEffect(() => {
@@ -48,7 +66,7 @@ const Goals = (props) => {
     <Fragment>
       <Layout />
       <div className={classes.main}>
-        {goals.map(
+        {sortedGoals.map(
           (item) =>
             !item.completed && (
               <div className={classes.goal} key={item.id}>

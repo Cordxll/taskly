@@ -13,8 +13,6 @@ import Layout from "../layout/Layout";
 import { format, parseISO, isSameDay } from "date-fns";
 import DateViewer from "../calendar/WeekCalendar";
 
-import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
-
 let initial = true;
 
 const TasksPage = (props) => {
@@ -26,9 +24,11 @@ const TasksPage = (props) => {
 
   const selected = parseISO(useSelector((state) => state.selectedDate.value));
 
-  let selectedDayTasks = tasks?.filter((task) =>
-    isSameDay(parseISO(task.day), selected)
-  );
+  let selectedDayTasks = tasks
+    ?.filter((task) => isSameDay(parseISO(task.day), selected))
+    .sort((a, b) => {
+      return a.time > b.time ? 1 : -1;
+    });
   // console.log(selectedDayTasks);
 
   useEffect(() => {
@@ -84,7 +84,7 @@ const TasksPage = (props) => {
       )}
       {addForm.addFormIsVisible && (
         <div className={classes.modal}>
-          <AddTaskForm onClose={toggleSaveFormHandler} title={"Create"} />
+          <AddTaskForm onClose={toggleSaveFormHandler} title={"Add a task"} />
         </div>
       )}
     </Fragment>

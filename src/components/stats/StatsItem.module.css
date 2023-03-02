@@ -1,0 +1,51 @@
+.goal {
+  /* display: grid; */
+  /* grid-template-columns: 1.5fr 4fr 1fr;
+  grid-template-rows: 1fr 1fr 0.5fr 1fr; */
+  /* justify-content: center;
+  align-items: center; */
+  color: rgb(45, 37, 37);
+  font-weight: semi-bold;
+}
+.progressbar {
+  width: 60px;
+  height: 60px;
+}
+.progressHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+}
+.titleDescription {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+}
+
+.progressTitle,
+.progressDescription {
+  margin-left: 1.5rem;
+}
+.progressTitle {
+  font-weight: bolder;
+}
+.progressDescription {
+  margin-top: 0.7rem;
+  font-size: smaller;
+}
+
+.completedTasks {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  font-size: smaller;
+}
+.completedTasksHeader {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  font-size: smaller;
+}

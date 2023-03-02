@@ -16,7 +16,6 @@ import TasksPage from "./components/tasks/TasksPage";
 import classes from "./components/layout/Layout.module.css";
 import EditTaskForm from "./components/tasks/EditTaskForm";
 import Profile from "./components/profile/Profile";
-import { useSelector } from "react-redux";
 
 function App() {
 
@@ -45,23 +44,23 @@ function App() {
           )}
           <Routes>
             <Route exact path="/" element={<HomePublic />} />
-            <Route exact path="/Layout" element={user.token ? <Layout /> : <HomePublic/>} />
-            <Route exact path="/Goals" element={user.token ? <Goals /> : <HomePublic/>} />
-            <Route exact path="/Tasks" element={user.token ? <TasksPage /> : <HomePublic/>} />
-            <Route exact path="/Edit" element={user.token ? <EditCard /> : <HomePublic/>} />
+            <Route exact path="/Layout" element={<Layout />} />
+            <Route exact path="/Goals" element={<Goals />} />
+            <Route exact path="/Tasks" element={<TasksPage />} />
+            <Route exact path="/Edit" element={<EditCard />} />
             <Route exact path="/Login" element={<Login />} />
             <Route exact path="/Register" element={<Register />} />
-            <Route exact path="/Cal" element={user.token ? <CalendarAndTasks /> : <HomePublic/>} />
-            <Route exact path="/profile" element={user.token ? <Profile/> : <HomePublic/>}/>
+            <Route exact path="/Cal" element={<CalendarAndTasks />} />
+            <Route exact path="/profile" element={<Profile/>}/>
             <Route
               exact
               path="/Goals/EditModal/:id"
-              element={user.token ? <EditGoalForm /> : <HomePublic/>}
+              element={<EditGoalForm />}
             />
             <Route
               exact
               path="/Tasks/EditModal/:id"
-              element={user.token ? <EditTaskForm /> : <HomePublic/>}
+              element={<EditTaskForm />}
             />
           </Routes>
         </Router>
