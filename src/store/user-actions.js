@@ -79,9 +79,6 @@ export function logout(dispatch) {
     dispatch(userActions.logoutUser());
 }
 
-
-//send entire user information in parameters and use properties to properly patch user. May have to use new model or use a Hashmap to accept
-//only specific pieces of a user (going to be missing password, so cannot use simple PUT method)
 export const updateUser = (username, email, userId) => {
     return async (dispatch) => {
         const sendRequest = async () => {
@@ -98,7 +95,6 @@ export const updateUser = (username, email, userId) => {
             }
 
             const response = await fetch("http://localhost:8080/user/update", request);
-
             if (!response.ok) {
                 dispatch(userActions.clearError());
                 const report = await response.json();
@@ -107,15 +103,16 @@ export const updateUser = (username, email, userId) => {
                 }
 
             }
-
+        }
             try {
                 await sendRequest();;
             } catch (error) {
                 console.log(error);
             }
-        }
+        
     }
 }
+
 function setUser(token) {
     return async (dispatch) => {
         const sendRequest = async () => {
@@ -146,7 +143,6 @@ function setUser(token) {
 
         dispatch(userActions.loginUser(userInfo));
     }
-
 
 
 }

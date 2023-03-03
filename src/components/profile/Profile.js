@@ -17,7 +17,6 @@ export default function Profile(){
     let [email, setEmail] = useState();
     let [bio, setBio] = useState();
 
-
     function handleSubmit(event) {
         event.preventDefault();
 

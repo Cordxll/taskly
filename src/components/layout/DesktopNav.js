@@ -77,11 +77,11 @@ const DesktopNav = () => {
               <img src={logo} style={{width:'100%'}}/>
             </Link>
           </div>
-          {user.username ? HomeCalendarStats():LoginRegister()}
+          {user?.username ? HomeCalendarStats():LoginRegister()}
         </div>
 
         <div className={`${classes.subcontainer} ${classes.last}`}>
-          {user.username ? Footer() : ""}
+          {user?.username ? Footer() : ""}
         </div>
       </div>
     </Fragment>
