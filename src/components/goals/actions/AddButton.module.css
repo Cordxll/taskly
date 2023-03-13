@@ -24,6 +24,7 @@
   border-radius: 100%;
   border: solid 0.8em #c78b8c;
   background-color: rgb(246, 236, 236, 0.7);
+  /* background-color: transparent; */
   box-shadow: 0 0 50px hsla(0, 43%, 11%, 0.314);
 }
 
@@ -49,5 +50,9 @@
     bottom: 11%;
     position: fixed;
     left: 50%;
+  }
+  .circle_plus {
+    font-size: 100% /*Will change icon size*/;
+    /* fill: white; */
   }
 }

@@ -32,6 +32,37 @@ export const fetchTasksData = () => {
   };
 };
 
+export const fetchTasksDataByUserId = (userId) => {
+  return async (dispatch) => {
+    const fetchData = async () => {
+      const init = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        // mode: "no-cors",
+      };
+      const response = await fetch(`${Api}/task/user/${userId}`, init);
+
+      if (!response.ok) {
+        throw new Error("Could not fetch task data!");
+      }
+
+      const data = await response.json();
+
+      return data;
+    };
+
+    try {
+      const taskData = await fetchData();
+
+      dispatch(tasksActions.replaceTask({ taskList: taskData }));
+    } catch (error) {
+      console.log("error");
+    }
+  };
+};
+
 export const updateTask = (task) => {
   return async () => {
     const sendRequest = async () => {
@@ -42,7 +73,6 @@ export const updateTask = (task) => {
         },
         body: JSON.stringify(task),
       });
-
       if (!response.ok) {
         throw new Error("Updating task data failed.");
       }

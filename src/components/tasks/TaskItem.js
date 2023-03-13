@@ -27,21 +27,24 @@ const TaskItem = (props) => {
   if (duration === 0 || !duration) {
     endTime = null;
   } else {
-    formatEndTime.setMinutes(
-      formatEndTime.getMinutes() + Number(duration ? duration : 0)
-    );
+    formatEndTime.setMinutes(formatEndTime.getMinutes() + Number(duration));
     endTime =
       " - " +
       new Date(formatEndTime).toLocaleString().split(",")[1].slice(0, 5) +
       new Date(formatEndTime).toLocaleString().split(",")[1].slice(8, 12);
   }
-
-  const startTime =
+  const theTime =
     new Date(formatDate).toLocaleString().split(",")[1].slice(0, 5) +
     new Date(formatDate).toLocaleString().split(",")[1].slice(8, 12);
 
+  let startTime;
+  if (time === "00:00") {
+    startTime = null;
+  } else {
+    startTime = theTime;
+  }
   return (
-    <div className={classes.taskItem}>
+    <div className={classes.taskItem} key={id}>
       <div className={classes.container}>
         <div>
           <div style={{ display: "flex" }}>
@@ -60,7 +63,7 @@ const TaskItem = (props) => {
           {day && startTime && (
             <div className={classes.time}>{[startTime, endTime]}</div>
           )}
-          {day && !startTime && <div className={classes.time}>{day}</div>}
+          {/* {day && !startTime && <div className={classes.time}>{day}</div>} */}
         </div>
         <button
           className={classes.btn}

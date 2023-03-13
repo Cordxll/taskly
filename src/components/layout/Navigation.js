@@ -5,7 +5,7 @@ import Stats from "../pics/stats.svg";
 import classes from "./Navigation.module.css";
 import { Fragment } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addActions } from "../../store/addSlice";
 const Navigation = (props) => {
   // const dispatch = useDispatch();
@@ -14,34 +14,33 @@ const Navigation = (props) => {
   // };
 
   const navigate = useNavigate();
-
-  return (
-    <Fragment>
-      <div className={classes.main}>
-        <ul className={classes.button}>
-          <li>
-            <button
-              className={classes.homeButton}
-              onClick={() => {
-                navigate("/Goals");
-              }}
-            >
-              <img className={classes.icon} src={Home} alt="homepage" />
-              {/* <span>Home</span> */}
-            </button>
-          </li>
-          <li>
-            <button
-              className={classes.calendarButton}
-              onClick={() => {
-                navigate("/Cal");
-              }}
-            >
-              <img className={classes.icon} src={Calendar} alt="calendar" />
-              {/* <span>Calendar</span> */}
-            </button>
-          </li>
-          {/* <li>
+  const user = useSelector((state) => state.auth.user);
+  if (user?.username) {
+    return (
+      <Fragment>
+        <div className={classes.main}>
+          <ul className={classes.button}>
+            <li>
+              <button
+                className={classes.homeButton}
+                onClick={() => {
+                  navigate("/Goals");
+                }}
+              >
+                <img className={classes.icon} src={Home} alt="homepage" />
+              </button>
+            </li>
+            <li>
+              <button
+                className={classes.calendarButton}
+                onClick={() => {
+                  navigate("/Cal");
+                }}
+              >
+                <img className={classes.icon} src={Calendar} alt="calendar" />
+              </button>
+            </li>
+            {/* <li>
             <button
               className={classes.addButton}
               onClick={toggleSaveFormHandler}
@@ -54,32 +53,33 @@ const Navigation = (props) => {
               </div>
             </button>
           </li> */}
-          <li>
-            <button
-              className={classes.statsButton}
-              onClick={() => {
-                navigate("/Stats");
-              }}
-            >
-              <img className={classes.icon} src={Stats} alt="statistics" />
-              {/* <span>Statistics</span> */}
-            </button>
-          </li>
-          <li>
-            <button
-              className={classes.profileButton}
-              onClick={() => {
-                navigate("/profile");
-              }}
-            >
-              <img className={classes.icon} src={Profile} alt="profile" />
-              {/* <span>Profile</span> */}
-            </button>
-          </li>
-        </ul>
-      </div>
-    </Fragment>
-  );
+            <li>
+              <button
+                className={classes.statsButton}
+                onClick={() => {
+                  navigate("/Stats");
+                }}
+              >
+                <img className={classes.icon} src={Stats} alt="statistics" />
+              </button>
+            </li>
+            <li>
+              <button
+                className={classes.profileButton}
+                onClick={() => {
+                  navigate("/profile");
+                }}
+              >
+                <img className={classes.icon} src={Profile} alt="profile" />
+              </button>
+            </li>
+          </ul>
+        </div>
+      </Fragment>
+    );
+  } else {
+    return null;
+  }
 };
 
 export default Navigation;

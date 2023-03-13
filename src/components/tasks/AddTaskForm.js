@@ -3,14 +3,20 @@ import Modal from "../ui/Modal";
 import SaveCard from "../goals/actions/SaveCard";
 import { tasksActions } from "../../store/tasksSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { fetchGoalsDataByUserId } from "../../store/goals-actions";
 import { parseISO } from "date-fns";
-import { createTask, fetchTasksData } from "../../store/tasks-actions";
+import {
+  createTask,
+  fetchTasksData,
+  fetchTasksDataByUserId,
+} from "../../store/tasks-actions";
 
 const AddTaskForm = (props) => {
   const dispatch = useDispatch();
   const selected = parseISO(useSelector((state) => state.selectedDate.value));
   const newId = Math.random();
+  const theUser = useSelector((state) => state.auth.user);
 
   let formIsValid = false;
 
@@ -22,26 +28,40 @@ const AddTaskForm = (props) => {
     day: selected.toISOString().slice(0, 10),
     goal: null,
     duration: "",
+    user: theUser,
   });
 
   const goalTitles = useSelector((state) =>
     state.goals.goalList.filter((item) => item.completed !== true)
   );
 
+  useEffect(() => {
+    dispatch(fetchGoalsDataByUserId(theUser.id));
+  }, [dispatch, theUser.id]);
+
+  const [theGoal, setTheGoal] = useState(null);
+
   if (item.title.trim() === "") {
     formIsValid = false;
   } else {
     formIsValid = true;
   }
+  const [active, setActive] = useState(item.duration);
 
   const handleDuration = (event) => {
     event.preventDefault();
-    // console.log(event.target.value);
+    setActive(event.target.value);
     setItem({ ...item, duration: event.target.value });
   };
 
   const submitHandler = (event) => {
     event.preventDefault();
+    console.log(item.time);
+
+    setTheGoal({
+      ...theGoal,
+      user: theUser,
+    });
 
     dispatch(
       createTask({
@@ -51,10 +71,10 @@ const AddTaskForm = (props) => {
         day: item.day,
         duration: item.duration,
         completed: false,
-        goal: item.goal,
+        goal: theGoal,
+        user: item.user,
       })
     );
-
     dispatch(
       tasksActions.addTask({
         id: item.id,
@@ -64,10 +84,12 @@ const AddTaskForm = (props) => {
         completed: false,
         day: item.day,
         duration: item.duration,
-        goal: item.goal,
+        goal: theGoal,
+        user: item.user,
       })
     );
-    dispatch(fetchTasksData());
+    // dispatch(fetchTasksData());
+    dispatch(fetchTasksDataByUserId(theUser.id));
     props.onClose();
   };
 
@@ -108,11 +130,18 @@ const AddTaskForm = (props) => {
                 <select
                   value={item.goal?.title}
                   onChange={(e) => {
-                    setItem({
-                      ...item,
-                      goal: goalTitles.find(
+                    // setItem({
+                    //   ...item,
+                    //   goal: goalTitles.find(
+                    //     (item) => item.title === e.target.value
+                    //   ),
+                    //   user: theUser,
+                    // });
+                    setTheGoal({
+                      ...goalTitles.find(
                         (item) => item.title === e.target.value
                       ),
+                      user: theUser,
                     });
                   }}
                 >
@@ -162,22 +191,58 @@ const AddTaskForm = (props) => {
                       <label htmlFor="duration">Duration</label>
                     </div>
                     <div className={classes.durationButtons}>
-                      <button value="15" onClick={handleDuration}>
+                      <button
+                        value="15"
+                        onClick={handleDuration}
+                        className={
+                          active === "15" ? `${classes.active}` : undefined
+                        }
+                      >
                         15m
                       </button>
-                      <button value="30" onClick={handleDuration}>
+                      <button
+                        value="30"
+                        onClick={handleDuration}
+                        className={
+                          active === "30" ? `${classes.active}` : undefined
+                        }
+                      >
                         30m
                       </button>
-                      <button value="45" onClick={handleDuration}>
+                      <button
+                        value="45"
+                        onClick={handleDuration}
+                        className={
+                          active === "45" ? `${classes.active}` : undefined
+                        }
+                      >
                         45m
                       </button>
-                      <button value="60" onClick={handleDuration}>
+                      <button
+                        value="60"
+                        onClick={handleDuration}
+                        className={
+                          active === "60" ? `${classes.active}` : undefined
+                        }
+                      >
                         1hr
                       </button>
-                      <button value="90" onClick={handleDuration}>
+                      <button
+                        value="90"
+                        onClick={handleDuration}
+                        className={
+                          active === "90" ? `${classes.active}` : undefined
+                        }
+                      >
                         1.5hr
                       </button>
-                      <button value="120" onClick={handleDuration}>
+                      <button
+                        value="120"
+                        onClick={handleDuration}
+                        className={
+                          active === "120" ? `${classes.active}` : undefined
+                        }
+                      >
                         2hr
                       </button>
                     </div>

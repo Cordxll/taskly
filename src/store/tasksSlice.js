@@ -48,9 +48,9 @@ const tasksSlice = createSlice({
     deleteTask: (state, action) => {
       state.changed = true;
       const id = action.payload;
-      const existingItem = state.taskList.find((user) => user.id === id);
+      const existingItem = state.taskList.find((item) => item.id === id);
       if (existingItem) {
-        state.goals = state.taskList.filter((user) => user.id !== id);
+        state.goals = state.taskList.filter((item) => item.id !== id);
       }
     },
   },

@@ -10,10 +10,10 @@ h1 {
 }
 
 .main {
+  height: 100vh;
   border-radius: 8px;
   margin-bottom: 15vh;
   overflow-y: scroll;
-  height: 90vh;
 }
 
 .modal {
@@ -25,19 +25,46 @@ h1 {
   text-align: center;
   z-index: 11;
 }
+
+.noGoals {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.noGoals span {
+  margin: 2rem 2rem 1rem 2rem;
+  color: black;
+  font-size: x-large;
+  text-align: center;
+}
+.noGoals .motivation {
+  font-size: large;
+  text-align: center;
+}
+
 @media only screen and (min-width: 768px) {
   .main {
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    flex-wrap: wrap;
-    margin: 1rem 2rem;
-    padding: 0.5rem 1rem;
-    width: 100%;
-    height: 90%;
-    margin-bottom: 3vh;
-    overflow-y: scroll;
-    margin-left: 4rem;
+    overflow: auto;
+    /* flex-direction: row;
+    justify-content: start;
+    align-items: start;
+    flex-wrap: nowrap; */
+
+    padding: 1rem 1rem;
+    /* width: 80vw; */
+    width: 70vw;
+    height: 80vh;
+    margin-bottom: 9vh;
+    margin-left: 11%;
+    /* overflow-y: scroll;
+    overflow-x: scroll; */
+    scroll-snap-type: x mandatory;
+  }
+
+  .main .goal {
+    flex-shrink: 0;
+    scroll-snap-align: start;
   }
 }

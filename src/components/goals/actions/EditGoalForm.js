@@ -5,17 +5,17 @@ import EditCard from "./EditCard";
 import ColorPicker from "../ColorPicker";
 import { useSelector, useDispatch } from "react-redux";
 import { goalsActions } from "../../../store/goalsSlice";
+import { tasksActions } from "../../../store/tasksSlice";
+import {
+  fetchTasksData,
+  fetchTasksDataByUserId,
+} from "../../../store/tasks-actions";
+import { updateTask, deleteTask } from "../../../store/tasks-actions";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { format } from "date-fns";
-import { sendGoalsData } from "../../../store/goals-actions";
+import { sendGoalsData, fetchGoalsData } from "../../../store/goals-actions";
 import { deleteGoal } from "../../../store/goals-actions";
-// import {
-//   CircularProgressbar,
-//   CircularProgressbarWithChildren,
-//   buildStyles,
-// } from "react-circular-progressbar";
-// import "react-circular-progressbar/dist/styles.css";
 
 const EditGoalForm = (props) => {
   const dispatch = useDispatch();
@@ -23,11 +23,15 @@ const EditGoalForm = (props) => {
 
   const params = useParams();
   const goals = useSelector((store) => store.goals.goalList);
+  const tasks = useSelector((store) => store.tasks.taskList);
+  const theUser = useSelector((state) => state.auth.user);
+
   const navigate = useNavigate();
   const existingItem = goals.filter((user) => user.id === Number(params.id));
 
   const { id, title, description, timeline, color, completed, progress, user } =
     existingItem[0];
+  // console.log(theUser);
 
   const [formHasChanged, setFormHasChanged] = useState(false);
 
@@ -39,7 +43,7 @@ const EditGoalForm = (props) => {
     description,
     timeline,
     completed,
-    user,
+    user: theUser,
     color,
     progress,
   });
@@ -69,10 +73,29 @@ const EditGoalForm = (props) => {
   };
 
   const handleRemoveItem = () => {
-    console.log(values.id);
+    const newTasks = tasks.filter(
+      (item) => item.goal && item.goal.title === title
+    );
+    //can't remove goal item unless task.goal is null
+    newTasks.map((item) => {
+      return (
+        dispatch(
+          tasksActions.changeInputs({
+            ...item,
+            id: item.id,
+            goal: null,
+            user: null,
+          })
+        ) &&
+        dispatch(
+          updateTask({ ...item, id: item.id, goal: null, user: null })
+        ) &&
+        dispatch(fetchTasksDataByUserId(user.id))
+      );
+    });
+
     dispatch(goalsActions.deleteGoal(values.id));
     dispatch(deleteGoal(values));
-
     navigate("/Goals");
   };
 
@@ -89,8 +112,6 @@ const EditGoalForm = (props) => {
       })
     );
   };
-
-  const [minVal, setMinVal] = useState(0);
 
   return (
     <Modal onClose={() => navigate("/Goals")}>
@@ -152,10 +173,17 @@ const EditGoalForm = (props) => {
                     max={100}
                     step={5}
                     onChange={(e) => {
-                      setValues({
-                        ...values,
-                        progress: +e.target.value,
-                      });
+                      +e.target.value === 100
+                        ? setValues({
+                            ...values,
+                            progress: +e.target.value,
+                            completed: true,
+                          })
+                        : setValues({
+                            ...values,
+                            progress: +e.target.value,
+                            completed: false,
+                          });
                       setFormHasChanged(true);
                     }}
                   />
@@ -167,19 +195,6 @@ const EditGoalForm = (props) => {
               {/* {titleHasError && (
                 <p className="error-text">Please enter a title.</p>
               )} */}
-              <div className={classes.completed}>
-                <label htmlFor="timeline">Completed</label>
-                <input
-                  type="checkbox"
-                  onChange={(e) => {
-                    setValues({
-                      ...values,
-                      completed: !values.completed,
-                    });
-                    setFormHasChanged(true);
-                  }}
-                />
-              </div>
             </div>
           </div>
           <EditCard

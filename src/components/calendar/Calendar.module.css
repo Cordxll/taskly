@@ -1,14 +1,18 @@
 .container {
-  width: 100vw;
+  width: 100%;
+  height: 50vh;
   display: flex;
+  /* flex-direction: row; */
   justify-content: center;
   text-align: center;
+  margin-bottom: 4rem;
 }
-.container button:hover{
+.container button:hover {
   cursor: pointer;
 }
 .containerChild {
   width: 90%;
+  /* height: 100%; */
   padding-top: 5%;
   border-radius: 8px;
 }
@@ -20,7 +24,7 @@
   color: white;
 }
 
-.colorWhite:hover{
+.colorWhite:hover {
   color: rgb(203 213 225);
 }
 
@@ -47,7 +51,8 @@
 
 .calendarGrid {
   display: grid;
-  height: auto;
+  /* height: auto; */
+  height: 90%;
   grid-auto-rows: 1fr;
   grid-template-columns: repeat(7, minmax(0, 1fr));
   padding-bottom: 14px;
@@ -57,7 +62,7 @@
   cursor: pointer;
 }
 
-.desktopHeader{
+.desktopHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -67,10 +72,10 @@
   border-radius: 10px 10px 0px 0px;
 }
 
-.isDefault{
+.isDefault {
   height: 100%;
 }
-.isDefault p{
+.isDefault p {
   color: rgb(100 116 139);
   margin-block-start: 0em;
   margin-block-end: 0.25em;
@@ -79,11 +84,11 @@
   scroll-padding-block-start: 1;
 }
 
-.isntSameMonth{
+.isntSameMonth {
   height: 100%;
   background-color: rgb(241 245 249);
 }
-.isntSameMonth p{
+.isntSameMonth p {
   color: rgb(100 116 139);
   margin-block-start: 0em;
   margin-block-end: 0.25em;
@@ -92,10 +97,11 @@
   scroll-padding-block-start: 1;
 }
 
-.isTodaySelected{
+.isTodaySelected {
   height: 100%;
+  background-color: rgba(152, 91, 91, 0.386);
 }
-.isTodaySelected p{
+.isTodaySelected p {
   color: cornflowerblue;
   font-weight: 600;
   text-decoration: underline;
@@ -105,10 +111,10 @@
   padding-left: 0.25em;
   scroll-padding-block-start: 1;
 }
-.isTodayUnselected{
+.isTodayUnselected {
   height: 100%;
 }
-.isTodayUnselected p{
+.isTodayUnselected p {
   color: rgb(100 116 139);
   text-decoration: underline;
   font-weight: 600;
@@ -118,10 +124,11 @@
   padding-left: 0.25em;
   scroll-padding-block-start: 1;
 }
-.isSelected{
+.isSelected {
   height: 100%;
+  background-color: rgba(152, 91, 91, 0.386);
 }
-.isSelected p{
+.isSelected p {
   color: cornflowerblue;
   margin-block-start: 0em;
   margin-block-end: 0.25em;
@@ -130,11 +137,11 @@
   scroll-padding-block-start: 1;
 }
 
-.btns{
+.btns {
   display: flex;
   gap: 6px;
 }
-.search{
+.search {
   padding: 10px;
   width: 7em;
   border: 1px solid rgb(100 116 139);
@@ -143,55 +150,64 @@
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
 }
 
-.task{
+.task {
+  display: none;
   visibility: hidden;
   padding-left: 5px;
   padding-right: 5px;
   white-space: nowrap;
   margin-bottom: 1%;
-  
 }
-.task p{
-  padding:5px;
+.task p {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  width: 90%;
   color: white;
-  font-size:x-small;
-  background-color: cornflowerblue;
+  font-size: x-small;
+  background-color: rgb(165, 191, 240);
   border-radius: 9999px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.colorWhite {
+  color: rgb(148 163 184);
+}
 
-
-@media screen and (min-width: 640px) {
-  .container {
-    width: 100%;
-  }
-
+/* @media screen and (min-width: 640px) {
   .colorWhite {
     color: rgb(148 163 184);
   }
 
-  .task{
+  .task {
     visibility: visible;
-  }
-}
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
-@media screen and (min-width: 1000px) {
+  }
+  .task p {
+    font-size: xx-small;
+  }
+} */
+
+@media screen and (min-width: 640px) {
   .calendarDate {
     background-color: white;
     display: flex;
     flex-direction: column;
     text-align: left;
     overflow: hidden;
-    
   }
-  .calendarGrid{
+  .calendarGrid {
     background-color: rgb(203 213 225);
     height: 75vh;
     grid-gap: 1px;
     padding: 1.5px;
   }
-  
+
   .gridHeader {
     display: none;
   }
@@ -206,12 +222,35 @@
     padding-bottom: 0px;
     background-color: rgb(203 213 225);
   }
-  .gridHeaderSm div{
+  .gridHeaderSm div {
     background-color: white;
     padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 5px;
     text-align: left;
-    font-size:x-small;
+    font-size: x-small;
+  }
+  .isDefault {
+    height: 50vh;
+  }
+  .isSelected {
+    height: 50vh;
+  }
+  .isntSameMonth {
+    height: 50vh;
+  }
+  .isTodaySelected {
+    height: 50vh;
+  }
+
+  .task {
+    visibility: visible;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .task p {
+    font-size: xx-small;
   }
 }

@@ -3,13 +3,19 @@ import Modal from "../../ui/Modal";
 import SaveCard from "./SaveCard";
 import ColorPicker from "../ColorPicker";
 import { goalsActions } from "../../../store/goalsSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { format } from "date-fns";
-import { createGoal, fetchGoalsData } from "../../../store/goals-actions";
+import {
+  createGoal,
+  fetchGoalsData,
+  fetchGoalsDataByUserId,
+} from "../../../store/goals-actions";
 
 const AddGoalForm = (props) => {
   const dispatch = useDispatch();
+  const theUser = useSelector((state) => state.auth.user);
+
   const newId = Math.random();
 
   let formIsValid = false;
@@ -42,6 +48,7 @@ const AddGoalForm = (props) => {
         description: item.description,
         timeline: item.timeline,
         color: item.color,
+        user: theUser,
       })
     );
 
@@ -51,18 +58,24 @@ const AddGoalForm = (props) => {
         description: item.description,
         timeline: item.timeline,
         color: item.color,
+        user: theUser,
       })
     );
-    dispatch(fetchGoalsData());
+    // dispatch(fetchGoalsData());
+    dispatch(fetchGoalsDataByUserId(theUser.id));
 
     props.onClose();
+    // dispatch(fetchGoalsData());
+    dispatch(fetchGoalsDataByUserId(theUser.id));
   };
 
   return (
     <Modal onClose={props.onClose}>
       <div className={classes.container}>
         <form onSubmit={submitHandler}>
-          <header className={classes.header}>{props.title}</header>
+          <div className={classes.header}>
+            <header>{props.title}</header>
+          </div>
           <div className={classes.control_group}>
             <div className={classes.form}>
               <div className={classes.textInput}>

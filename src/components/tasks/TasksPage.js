@@ -3,24 +3,27 @@ import { useSelector, useDispatch } from "react-redux";
 import { tasksActions } from "../../store/tasksSlice";
 import classes from "../tasks/TaskPage.module.css";
 import TaskItem from "./TaskItem";
-import { fetchTasksData } from "../../store/tasks-actions";
+import { fetchTasksDataByUserId } from "../../store/tasks-actions";
 import AddButton from "../goals/actions/AddButton";
 import { addActions } from "../../store/addSlice";
 import { editActions } from "../../store/editSlice";
 import AddTaskForm from "../tasks/AddTaskForm";
 import EditTaskForm from "../tasks/EditTaskForm";
 import Layout from "../layout/Layout";
-import { format, parseISO, isSameDay } from "date-fns";
+import { parseISO, isSameDay } from "date-fns";
 import DateViewer from "../calendar/WeekCalendar";
+import { useNavigate } from "react-router-dom";
 
 let initial = true;
 
 const TasksPage = (props) => {
   const tasks = useSelector((state) => state.tasks.taskList);
+  const user = useSelector((state) => state.auth.user);
   const taskChanged = useSelector((state) => state.tasks.changed);
   const dispatch = useDispatch();
   const addForm = useSelector((state) => state.add);
   const editForm = useSelector((state) => state.edit);
+  const navigate = useNavigate();
 
   const selected = parseISO(useSelector((state) => state.selectedDate.value));
 
@@ -29,11 +32,13 @@ const TasksPage = (props) => {
     .sort((a, b) => {
       return a.time > b.time ? 1 : -1;
     });
-  // console.log(selectedDayTasks);
 
   useEffect(() => {
-    dispatch(fetchTasksData());
-  }, [dispatch]);
+    if (!user?.username) {
+      navigate("/");
+    }
+    dispatch(fetchTasksDataByUserId(user.id));
+  }, [dispatch, user, navigate]);
 
   useEffect(() => {
     if (initial) {
@@ -41,10 +46,10 @@ const TasksPage = (props) => {
       return;
     }
     if (taskChanged) {
-      dispatch(fetchTasksData());
+      dispatch(fetchTasksDataByUserId(user.id));
       dispatch(tasksActions.changeStatus());
     }
-  }, [dispatch, taskChanged]);
+  }, [dispatch, taskChanged, user.id]);
 
   const toggleSaveFormHandler = () => {
     dispatch(addActions.toggle());
@@ -57,12 +62,19 @@ const TasksPage = (props) => {
   return (
     <Fragment>
       <Layout />
-      <DateViewer />
+      <DateViewer key={Math.random()} className={classes.dateViewer} />
 
       <div className={classes.container}>
         <div className={classes.containerChild}>
-          {selectedDayTasks.map(
-            (item) => !item.completed && <TaskItem key={item.id} item={item} />
+          {selectedDayTasks.length !== 0 ? (
+            selectedDayTasks.map(
+              (item) =>
+                !item.completed && <TaskItem key={item.id} item={item} />
+            )
+          ) : (
+            <div className={classes.noTask}>
+              <span>No tasks for this day yet...</span>
+            </div>
           )}
         </div>
       </div>

@@ -6,41 +6,32 @@ import AddGoalForm from "./actions/AddGoalForm";
 import EditGoalForm from "./actions/EditGoalForm";
 import { addActions } from "../../store/addSlice";
 import { editActions } from "../../store/editSlice";
-import { fetchGoalsData } from "../../store/goals-actions";
-import { fetchTasksData } from "../../store/tasks-actions";
+import { fetchGoalsDataByUserId } from "../../store/goals-actions";
+import { fetchTasksDataByUserId } from "../../store/tasks-actions";
 import AddButton from "./actions/AddButton";
 import Layout from "../layout/Layout";
 import { goalsActions } from "../../store/goalsSlice";
+import { useNavigate } from "react-router-dom";
 
 let initial = true;
 const Goals = (props) => {
+  const dispatch = useDispatch();
   const goals = useSelector((state) => state.goals.goalList);
-
-  const [sortedGoals, setSortedGoals] = useState(goals);
-
-  useEffect(() => {
-    setSortedGoals(
-      goals
-        .filter((item) => !item.completed)
-        .sort((a, b) => {
-          return !a.timeline ? 1 : -1;
-        })
-        .sort((a, b) => {
-          return new Date(a.timeline) > new Date(b.timeline) ? 1 : -1;
-        })
-    );
-  }, [goals]);
+  const user = useSelector((state) => state.auth.user);
+  const navigate = useNavigate();
 
   const goalChanged = useSelector((state) => state.goals.changed);
 
   const addForm = useSelector((state) => state.add);
   const editForm = useSelector((state) => state.edit);
-  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchGoalsData());
-    dispatch(fetchTasksData());
-  }, [dispatch]);
+    if (!user?.username) {
+      navigate("/");
+    }
+    dispatch(fetchGoalsDataByUserId(user.id));
+    dispatch(fetchTasksDataByUserId(user.id));
+  }, [dispatch, user.id, navigate, user]);
 
   useEffect(() => {
     if (initial) {
@@ -48,10 +39,10 @@ const Goals = (props) => {
       return;
     }
     if (goalChanged) {
-      dispatch(fetchGoalsData());
+      dispatch(fetchGoalsDataByUserId(user.id));
       dispatch(goalsActions.changeStatus());
     }
-  }, [dispatch, goalChanged]);
+  }, [dispatch, goalChanged, user.id]);
 
   const toggleSaveFormHandler = () => {
     dispatch(addActions.toggle());
@@ -66,32 +57,39 @@ const Goals = (props) => {
     <Fragment>
       <Layout />
       <div className={classes.main}>
-        {sortedGoals.map(
-          (item) =>
-            !item.completed && (
-              <div className={classes.goal} key={item.id}>
-                <GoalItem
-                  key={item.id}
-                  item={{
-                    id: item.id,
-                    title: item.title,
-                    description: item.description,
-                    timeline: item.timeline,
-                    color: item.color,
-                    completed: item.completed,
-                    user: item.user,
-                  }}
-                />
-              </div>
+        {goals.length === 0 ? (
+          <div className={classes.noGoals}>
+            <span>No goals yet...</span>
+            <span className={classes.motivation}>
+              Create your first goal now <br /> and be a step closer to a more
+              productive day
+            </span>
+          </div>
+        ) : (
+          goals
+            .filter((item) => !item.completed)
+            .sort((a, b) => {
+              return !a.timeline ? 1 : -1;
+            })
+            .sort((a, b) => {
+              return new Date(a.timeline) > new Date(b.timeline) ? 1 : -1;
+            })
+            .map(
+              (item) =>
+                !item.completed && (
+                  <div className={classes.goal} key={item.id}>
+                    <GoalItem key={item.id} item={item} />
+                  </div>
+                )
             )
         )}
-        <AddButton
-          onClick={() => {
-            toggleSaveFormHandler();
-            dispatch(addActions.setTitle("New Goal"));
-          }}
-        />
       </div>
+      <AddButton
+        onClick={() => {
+          toggleSaveFormHandler();
+          dispatch(addActions.setTitle("New Goal"));
+        }}
+      />
 
       {editForm.editFormIsVisible && (
         <div className={classes.modal}>

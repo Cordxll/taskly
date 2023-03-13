@@ -5,14 +5,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { tasksActions } from "../../store/tasksSlice";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { updateTask, deleteTask } from "../../store/tasks-actions";
-import { fetchGoalsData } from "../../store/goals-actions";
-import { format, getTime, parseISO, parse } from "date-fns";
-import TimePicker from "react-time-picker";
-import { getByTitle } from "@testing-library/react";
-
-const isNotEmpty = (value) => value.trim() !== "";
-let isInitial = true;
+import {
+  updateTask,
+  deleteTask,
+  fetchTasksDataByUserId,
+} from "../../store/tasks-actions";
+import { fetchGoalsDataByUserId } from "../../store/goals-actions";
 
 const EditTaskForm = (props) => {
   const dispatch = useDispatch();
@@ -20,21 +18,26 @@ const EditTaskForm = (props) => {
 
   const params = useParams();
   const tasks = useSelector((store) => store.tasks.taskList);
+  const theUser = useSelector((state) => state.auth.user);
   const navigate = useNavigate();
   const existingItem = tasks.filter((user) => user.id === Number(params.id));
 
   const { id, title, description, time, day, duration, completed, user, goal } =
     existingItem[0];
 
-  useEffect(() => {
-    dispatch(fetchGoalsData());
-  }, [dispatch]);
-
   const goalTitles = useSelector((state) =>
     state.goals.goalList.filter((item) => item.completed !== true)
   );
 
+  useEffect(() => {
+    dispatch(fetchGoalsDataByUserId(theUser.id));
+  }, [dispatch, theUser.id]);
+
   const [formHasChanged, setFormHasChanged] = useState(false);
+
+  const [theGoal, setTheGoal] = useState(
+    goal ? { ...goal, user: theUser } : null
+  );
 
   let formIsValid = true;
 
@@ -43,7 +46,7 @@ const EditTaskForm = (props) => {
     title,
     description,
     completed,
-    user,
+    user: theUser,
     time,
     day,
     duration,
@@ -70,8 +73,28 @@ const EditTaskForm = (props) => {
 
   const handleEditItem = (event) => {
     event.preventDefault();
+    // dispatch(goalsActions.changeInputs({ user: theUser }));
     setFormHasChanged(true);
-    dispatch(updateTask(values));
+
+    // if (theGoal?.title) {
+    setTheGoal({
+      ...theGoal,
+      user: theUser,
+    });
+    // }
+    dispatch(
+      updateTask({
+        id: values.id,
+        title: values.title,
+        description: values.description,
+        time: values.time,
+        day: values.day,
+        duration: values.duration,
+        completed: values.completed,
+        user: values.user,
+        goal: theGoal,
+      })
+    );
     dispatch(
       tasksActions.changeInputs({
         id: values.id,
@@ -82,20 +105,20 @@ const EditTaskForm = (props) => {
         duration: values.duration,
         completed: values.completed,
         user: values.user,
-        goal: values.goal,
+        goal: theGoal,
       })
     );
+    dispatch(fetchTasksDataByUserId(theUser.id));
     navigate("/Tasks");
   };
 
   const handleRemoveItem = () => {
-    console.log(values.id);
     dispatch(tasksActions.deleteTask(values.id));
     dispatch(deleteTask(values));
+    dispatch(fetchTasksDataByUserId(theUser.id));
 
     navigate("/Tasks");
   };
-
   return (
     <Modal onClose={() => navigate("/Tasks")}>
       <div className={classes.container}>
@@ -137,14 +160,21 @@ const EditTaskForm = (props) => {
 
                 <label htmlFor="goalSelector">Goal</label>
                 <select
-                  value={goal?.title}
+                  value={theGoal?.title}
                   onChange={(e) => {
-                    setValues({
-                      ...values,
-                      goal: goalTitles.find(
+                    // setValues({
+                    //   ...values,
+                    //   goal: goalTitles.find(
+                    //     (item) => item.title === e.target.value
+                    //   ),
+                    // });
+                    setTheGoal({
+                      ...goalTitles.find(
                         (item) => item.title === e.target.value
                       ),
+                      user: theUser,
                     });
+
                     setFormHasChanged(true);
                   }}
                 >

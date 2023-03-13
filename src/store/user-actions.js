@@ -1,113 +1,155 @@
-import { userActions } from "./userSlice"
+import { userActions } from "./userSlice";
 import { Api } from "../hooks/Api";
 import jwtDecode from "jwt-decode";
 
 const LOCAL_STORAGE_TOKEN_KEY = "productivePeopleToken";
 
 export const login = (username, password) => {
-    return async (dispatch) => {
-        const sendRequest = async () => {
-            const request = {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    username: username,
-                    password: password
-                })
-            }
+  return async (dispatch) => {
+    const sendRequest = async () => {
+      const request = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username,
+          password,
+        }),
+      };
 
-            const response = await fetch("http://localhost:8080/user/login/authenticate", request);
+      const response = await fetch(
+        "http://localhost:8080/user/login/authenticate",
+        request
+      );
 
-            if (response.ok) {
-                const { token } = await response.json();
-                dispatch(setUser(token));
-            } else {
-                dispatch(userActions.clearError());
-                const report = await response.json();
-        
-                dispatch(userActions.logError("Incorrect username or password"));
-            }
+      if (response.ok) {
+        const { token } = await response.json();
+        dispatch(setUser(token));
+      } else {
+        dispatch(userActions.clearError());
+        const report = await response.json();
+        for (let i = 0; i < report.length; i++) {
+          dispatch(userActions.logError(report[i]));
         }
+      }
+    };
 
-        try {
-            await sendRequest();;
-        } catch (error) {
-            console.log(error);
-        }
+    try {
+      await sendRequest();
+    } catch (error) {
+      dispatch(userActions.clearError());
+      dispatch(userActions.logError("Password is incorrect"));
     }
+  };
+};
 
-}
+export const register = (fullName, username, password, email, pictureUrl) => {
+  return async (dispatch) => {
+    const sendRequest = async () => {
+      const request = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          fullName,
+          username,
+          password,
+          email,
+          pictureUrl,
+        }),
+      };
 
-export const register = (username, password, email) => {
-    return async (dispatch) => {
-        const sendRequest = async () => {
-            const request = {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    username,
-                    password,
-                    email
-                })
-            }
+      const response = await fetch(
+        "http://localhost:8080/user/register/authenticate",
+        request
+      );
 
-            const response = await fetch("http://localhost:8080/user/register/authenticate", request);
-
-            if (response.ok) {
-                const { token } = await response.json();
-                dispatch(setUser(token));
-            } else {
-                dispatch(userActions.clearError());
-                const report = await response.json();
-                for (let i = 0; i < report.length; i++) {
-                    dispatch(userActions.logError(report[i]));
-                }
-            }
+      if (response.ok) {
+        const { token } = await response.json();
+        dispatch(setUser(token));
+      } else {
+        dispatch(userActions.clearError());
+        const report = await response.json();
+        for (let i = 0; i < report.length; i++) {
+          dispatch(userActions.logError(report[i]));
         }
+      }
+    };
 
-        try {
-            await sendRequest();;
-        } catch (error) {
-            console.log(error);
-        }
+    try {
+      await sendRequest();
+    } catch (error) {
+      console.log(error);
     }
-}
+  };
+};
 
-export function logout(dispatch) {
-    localStorage.removeItem(LOCAL_STORAGE_TOKEN_KEY);
-    dispatch(userActions.logoutUser());
-}
+export const logout = (dispatch) => {
+  dispatch(userActions.clearError());
+  userActions.logoutUser();
+};
 
 function setUser(token) {
-    return async (dispatch) => {
-        const sendRequest = async () => {
-            const response = await fetch(`${Api}/user/${username}`);
-            const body = await response.json();
-            return body;
-        }
+  return async (dispatch) => {
+    const sendRequest = async () => {
+      const init = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const response = await fetch(`${Api}/user/${username}`, init);
+      const body = await response.json();
+      return body;
+    };
 
-        localStorage.setItem(LOCAL_STORAGE_TOKEN_KEY, token);
-        const { sub: username } = jwtDecode(token);
+    const { sub: username } = jwtDecode(token);
 
-        let body;
+    try {
+      const body = await sendRequest();
 
-        try {
-            body = await sendRequest();
-        } catch (error) {
-            console.log(error);
-        }
-
-        const userInfo = {}
-
-        userInfo.username = username;
-        userInfo.userId = body.id;
-        userInfo.email = body.email;
-        userInfo.token = token;
-
-        console.log(token, username);
-
-        dispatch(userActions.loginUser(userInfo));
+      const userInfo = {
+        fullName: body.fullName,
+        username: username,
+        id: body.id,
+        email: body.email,
+        token: token,
+        pictureUrl: body.pictureUrl,
+      };
+      localStorage.setItem("user", JSON.stringify(userInfo));
+      dispatch(userActions.loginUser(userInfo));
+    } catch (error) {
+      console.log(error);
     }
+  };
+}
+
+export const updateUserInfo = (user) => {
+  return async (dispatch) => {
+    const sendRequest = async () => {
+      const response = await fetch(`${Api}/user/update/${user.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+      });
+      if (response.ok) {
+        const { token } = await response.json();
+        dispatch(setUser(token));
+      } else {
+        dispatch(userActions.clearError());
+        const report = await response.json();
+        for (let i = 0; i < report.length; i++) {
+          dispatch(userActions.logError(report[i]));
+        }
+      }
+    };
+
+    try {
+      await sendRequest();
+    } catch (error) {
+      console.log("error");
+    }
+  };
 };

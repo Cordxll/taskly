@@ -1,5 +1,4 @@
-import { Fragment, useState } from "react";
-
+import { Fragment, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { uiActions } from "../../store/uiSlice";
 import Card from "../ui/Card";
@@ -8,6 +7,7 @@ import classes from "./GoalItem.module.css";
 import MoreButton from "./MoreButton";
 import TimeClock from "../pics/time.svg";
 import { editActions } from "../../store/editSlice";
+import { fetchGoalsDataByUserId } from "../../store/goals-actions";
 import { useNavigate } from "react-router-dom";
 import { format } from "date-fns";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
@@ -15,6 +15,10 @@ import "react-circular-progressbar/dist/styles.css";
 
 const GoalItem = (props) => {
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth.user);
+  useEffect(() => {
+    dispatch(fetchGoalsDataByUserId(user.id));
+  }, [dispatch, user.id]);
 
   const goals = useSelector((store) => store.goals.goalList);
 
@@ -26,7 +30,6 @@ const GoalItem = (props) => {
     existingItem[0];
 
   const navigate = useNavigate();
-  const showTasks = useSelector((state) => state.ui.taskIsVisible);
 
   const [completedTasks, setCompletedTasks] = useState(false);
   const toggleGoalHandler = () => {
@@ -53,7 +56,7 @@ const GoalItem = (props) => {
     });
   return (
     <>
-      <Card>
+      <Card className={classes.card}>
         <div
           className={
             description.trim() !== "" && timeline
@@ -61,10 +64,6 @@ const GoalItem = (props) => {
               : classes.noDescription
           }
         >
-          {/* <button
-            className={classes.themeColorBtn}
-            style={{ backgroundColor: color }}
-          ></button> */}
           <div>
             <CircularProgressbar
               value={progress}
@@ -84,7 +83,6 @@ const GoalItem = (props) => {
               navigate(`/Goals/EditModal/${id}`);
               dispatch(editActions.setTitle("Update goal"));
             }}
-            // title="Update goal"
             goal={props}
             key={id}
           />

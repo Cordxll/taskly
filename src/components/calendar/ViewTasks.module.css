@@ -1,26 +1,33 @@
-.container{
-    width: 100vw;
-    display:flex;
-    justify-content: center;
+.container {
+  width: 100vw;
+  margin-bottom: 15vh;
+  overflow-y: scroll;
 }
 
-.containerChild{
-    width: 90%;
-    padding-top: 5%;
-    border-radius: 8px;
+.containerChild {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+}
+.containerChild h1 {
+  margin: 0.5rem 0;
 }
 
-.whatsHappening{
-    color:#696969
+.whatsHappening {
+  color: #696969;
+  margin: 0.5rem 0 1.5rem 0;
 }
 
-.noTask{
-    color: black;
+.noTask {
+  color: black;
+  text-align: center;
 }
 
-@media screen and (min-width: 640px){
-    .container{
-        width: 100%;
-        padding: 1%;
-    }
+@media screen and (min-width: 640px) {
+  .container {
+    width: 100%;
+    padding: 1%;
   }
+}

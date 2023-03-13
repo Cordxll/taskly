@@ -23,7 +23,25 @@
   font-size: 2remrem;
   font-weight: bolder;
 }
-
 .noTask {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.noTask span {
   color: black;
+  font-size: x-large;
+}
+@media only screen and (min-width: 768px) {
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .containerChild {
+    width: 50%;
+  }
 }

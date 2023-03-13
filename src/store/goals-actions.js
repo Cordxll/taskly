@@ -32,6 +32,38 @@ export const fetchGoalsData = () => {
   };
 };
 
+export const fetchGoalsDataByUserId = (userId) => {
+  return async (dispatch) => {
+    const fetchData = async () => {
+      const init = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        // mode: "no-cors",
+      };
+      const response = await fetch(`${Api}/goals/user/${userId}`, init);
+
+      if (!response.ok) {
+        throw new Error("Could not fetch cart data!");
+      }
+
+      const data = await response.json();
+      // console.log(data);
+
+      return data;
+    };
+
+    try {
+      const goalData = await fetchData();
+
+      dispatch(goalsActions.replaceGoal({ goalList: goalData }));
+    } catch (error) {
+      console.log("error");
+    }
+  };
+};
+
 export const sendGoalsData = (goal) => {
   return async (dispatch) => {
     const sendRequest = async () => {
@@ -103,31 +135,31 @@ export const deleteGoal = (goal) => {
   };
 };
 
-export const fetchTasksForGoal = (goal) => {
-  return async (dispatch) => {
-    const fetchData = async () => {
-      const init = {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        // mode: "no-cors",
-      };
-      const response = await fetch(`${Api}/task/${goal.id}`, init);
+// export const fetchTasksForGoal = (goal) => {
+//   return async (dispatch) => {
+//     const fetchData = async () => {
+//       const init = {
+//         method: "GET",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         // mode: "no-cors",
+//       };
+//       const response = await fetch(`${Api}/task/${goal.id}`, init);
 
-      if (!response.ok) {
-        throw new Error("Could not fetch task data!");
-      }
+//       if (!response.ok) {
+//         throw new Error("Could not fetch task data!");
+//       }
 
-      const data = await response.json();
+//       const data = await response.json();
 
-      return data;
-    };
+//       return data;
+//     };
 
-    try {
-      await fetchData();
-    } catch (error) {
-      console.log("error");
-    }
-  };
-};
+//     try {
+//       await fetchData();
+//     } catch (error) {
+//       console.log("error");
+//     }
+//   };
+// };

@@ -1,51 +1,88 @@
+.overdue {
+  border: 1px solid rgb(167, 44, 44);
+  box-shadow: 0 0 10px #ce2e2e50;
+}
 .goal {
-  /* display: grid; */
-  /* grid-template-columns: 1.5fr 4fr 1fr;
-  grid-template-rows: 1fr 1fr 0.5fr 1fr; */
-  /* justify-content: center;
-  align-items: center; */
   color: rgb(45, 37, 37);
+  font-size: 1.1rem;
   font-weight: semi-bold;
+  display: grid;
+  grid-template-columns: 1fr 4fr 0.1fr;
+  grid-template-rows: 1fr 0.5fr;
+}
+.overdueHeader {
+  color: rgb(167, 44, 44);
+  font-size: 1rem;
+  font-weight: semi-bold;
+  grid-row: 1;
+  grid-column: 3;
 }
 .progressbar {
   width: 60px;
   height: 60px;
-}
-.progressHeader {
-  display: flex;
-  flex-direction: row;
-  justify-content: start;
-}
-.titleDescription {
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  align-items: start;
+  grid-row: 1 / span 2;
+  grid-column: 1;
 }
 
-.progressTitle,
-.progressDescription {
-  margin-left: 1.5rem;
-}
 .progressTitle {
-  font-weight: bolder;
+  grid-column: 2;
+  grid-row: 1;
+  align-self: center;
 }
-.progressDescription {
-  margin-top: 0.7rem;
-  font-size: smaller;
+
+.progressTitle {
+  margin-left: 1.5rem;
+  font-weight: bolder;
 }
 
 .completedTasks {
+  grid-column: 2;
+  grid-row: 2;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   font-size: smaller;
 }
+.onlyCompleted {
+  margin-left: 1.5rem;
+  grid-column: 2;
+  grid-row: 2;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;
+  font-size: smaller;
+}
+
+.onlyCompleted header {
+  margin-right: 1rem;
+}
+
 .completedTasksHeader {
   display: flex;
   flex-direction: column;
-  justify-content: start;
-  align-items: start;
-  font-size: smaller;
+  justify-content: center;
+  align-items: center;
+}
+.completedTasksHeader header {
+  color: rgb(112, 107, 107);
+  font-size: 0.7rem;
+  margin-left: 1rem;
+  margin-bottom: 0.4rem;
+  /* margin-right: 1rem; */
+}
+.completedTasksHeader span {
+  color: rgb(26, 24, 24);
+  font-size: 0.7rem;
+
+  /* margin-right: 1rem; */
+}
+
+@media only screen and (min-width: 768px) {
+  .overdue,
+  .goalContainer {
+    margin-top: 2rem;
+    width: 50vw;
+  }
 }

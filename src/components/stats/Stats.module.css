@@ -4,6 +4,12 @@
   font-weight: 600;
   padding: 2rem 2.5rem 1rem 2.5rem;
 }
+.container {
+  height: 100vh;
+}
+.topContainer {
+  margin-top: 2rem;
+}
 .topCardHeader {
   display: flex;
   flex-direction: column;
@@ -27,6 +33,7 @@
   margin: 1rem;
   margin-top: 1.5rem;
 }
+
 .active,
 .nearlyDone,
 .completed {
@@ -36,6 +43,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  border: none;
+  background-color: transparent;
 }
 .active p,
 .nearlyDone p,
@@ -44,4 +53,27 @@
   font-size: 1.1rem;
   margin-top: 0.7rem;
   margin-bottom: 0.7rem;
+}
+
+.activeBtn {
+  border: none;
+  border-radius: 7px;
+  padding: 0.5rem;
+  background-color: rgba(230, 197, 197, 0.5);
+}
+
+@media only screen and (min-width: 768px) {
+  .header {
+    margin: 0 25% 2% 25%;
+    font-size: xx-large;
+  }
+  .topContainer {
+    width: 50vw;
+  }
+  .container {
+    padding-top: 2rem;
+  }
+  .goals {
+    justify-content: space-evenly;
+  }
 }

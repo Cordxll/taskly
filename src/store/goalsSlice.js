@@ -48,6 +48,8 @@ const goalsSlice = createSlice({
         description: newItem.description,
         timeline: newItem.timeline,
         color: newItem.color,
+        user: newItem.user,
+        completed: false,
         progress: 0,
       });
     },
