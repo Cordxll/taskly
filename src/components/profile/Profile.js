@@ -106,6 +106,7 @@ export default function Profile() {
           </label>
         </div>
       </div>
+
       <form className={classes.form} onSubmit={handleSubmit}>
         <div className={fullNameError.length > 0 ? classes.error : ""}>
           <label>Name</label>

@@ -89,6 +89,41 @@ export const logout = (dispatch) => {
   userActions.logoutUser();
 };
 
+export const updateUser = (username, email, userId) => {
+  return async (dispatch) => {
+    const sendRequest = async () => {
+      const request = {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username,
+          email,
+          userId,
+        }),
+      };
+
+      const response = await fetch(
+        "http://localhost:8080/user/update",
+        request
+      );
+      if (!response.ok) {
+        dispatch(userActions.clearError());
+        const report = await response.json();
+        for (let i = 0; i < report.length; i++) {
+          dispatch(userActions.logError(report[i]));
+        }
+      }
+    };
+    try {
+      await sendRequest();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
 function setUser(token) {
   return async (dispatch) => {
     const sendRequest = async () => {

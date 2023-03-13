@@ -19,6 +19,8 @@
     "react-scripts": "5.0.1",
     "react-time-picker": "^5.2.0",
     "react-uuid": "^2.0.0",
+    "redux-persist": "^6.0.0",
+    "reduxjs-toolkit-persist": "^7.2.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
